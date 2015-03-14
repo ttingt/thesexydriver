@@ -16,6 +16,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This file is still being implemented
  * @author yves
@@ -34,7 +37,11 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private double accelerationX;
     private double accelerationY;
     private double accelerationZ;
-    private BrakePoint brakePoint;
+
+    private int speedPtsCount;
+    private List<AccelerationPoint> accelPts;
+    private int speedRatingSoFar;
+    int brakeCount;
 
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
@@ -57,7 +64,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         brakingRatingTextView = (TextView) findViewById(R.id.brakingrating);
         ratingTextView = (TextView) findViewById(R.id.rating);
         ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
-        brakePoint = new BrakePoint(this,0,0);
+        brakeCount = 0;
+        accelPts = new ArrayList<AccelerationPoint>();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
@@ -68,12 +76,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
 
             public void onLocationChanged(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-
-                speedingRatingTextView.setText(
-                        "Current speed:" + location.getSpeed());
-
+                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
+                updateSpeedRatingSoFar(newpt);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -101,8 +105,22 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                     Math.pow(accelerationZ, 2));
             double delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
-            brakePoint.brakes();
-            brakingRatingTextView.setText("Brake Rating " + brakeRating() +brakePoint.getBreakCount()); //These are the X,Y,Z accelerations in m/s^2
+            timeForBrake();
+            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
+    }
+
+    public double timeForBrake(){
+        double startTime = 0;
+        double endTime = 0;
+        double difference;
+        if(getmAccel() < -10) {
+            startTime = System.currentTimeMillis();
+        }
+        if (getmAccel() > 0) {
+            endTime = System.currentTimeMillis();
+        }
+        difference = endTime - startTime;
+        return difference;
     }
 
     public double getmAccel() {
@@ -126,6 +144,22 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         return ratingSoFar;
     }
 
+    public int updateSpeedRatingSoFar(AccelerationPoint ap) {
+        accelPts.add(ap);
+        speedPtsCount++;
+
+        if (accelPts.size() < 10) return speedRatingSoFar;
+
+        int addFactor = 0;
+
+        if (ap.getSpeed()> 90) addFactor = 10;
+        else if (ap.getSpeed()> 80) addFactor = 7;
+        else if (ap.getSpeed()> 70) addFactor = 4;
+        else if (ap.getSpeed()> 50) addFactor = 1;
+
+        speedRatingSoFar += addFactor;
+        return speedRatingSoFar;
+    }
 
 
     @Override
