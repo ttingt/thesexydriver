@@ -11,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-
+/**
+ * This file is still being implemented
+ * @author yves
+ * @version 1.0
+ */
 public class AccelerometerTestActivity extends ActionBarActivity implements SensorEventListener{
 
     private Sensor accelerometer;
@@ -19,8 +23,10 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private TextView accelerationTextView;
     private double accelerationX;
     private double accelerationY;
-    private float accelerationZ;
+    private double accelerationZ;
     private double accelerationVector;
+    private double[] accelerationData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +70,8 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 
         accelerationTextView.setText("X:" + accelerationX+
                 "\nY: " + accelerationY +
-                "\nZ: " + accelerationZ); //These are the X,Y,Z accelerations in m/s^2
+                "\nZ: " + accelerationZ
+                "\nVector of X and Y: "+ accelerationVector); //These are the X,Y,Z accelerations in m/s^2
 
     }
 
@@ -85,6 +92,27 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         return accelerationVector;
     }
 
+
+//    public void onSensorChanged(SensorEvent event) {
+//        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+//            accelVals = lowPass( event.values, accelVals );
+//
+//        // use smoothed accelVals here; see this link for a simple compass example:
+//        // http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
+//    }
+//
+//    /**
+//     * @see http://en.wikipedia.org/wiki/Low-pass_filter#Algorithmic_implementation
+//     * @see http://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter
+//     */
+//    protected float[] lowPass( float[] input, float[] output ) {
+//        if ( output == null ) return input;
+//
+//        for ( int i=0; i<input.length; i++ ) {
+//            output[i] = output[i] + ALPHA * (input[i] - output[i]);
+//        }
+//        return output;
+//    }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
