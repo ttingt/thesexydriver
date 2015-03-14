@@ -28,6 +28,16 @@ public class Car {
         this.emissions = emissions;
     }
 
+    public double fuelConsumed() {
+        return fuelConsumption / 100; // * distanceTraveled * accel multiplier
+    }
+
+    public double co2Emitted() {
+        return emissions; // * distanceTravelled * accel multiplier
+    }
+
+
+    // GETTERS AND SETTERS
     public int getYear() {
         return year;
     }

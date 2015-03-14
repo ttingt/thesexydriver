@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,7 +16,7 @@ import com.androidplot.xy.XYSeries;
 import java.util.Arrays;
 
 
-public class StatsActivity extends ActionBarActivity {
+public class StatsActivity extends Activity {
 
 
     private XYPlot plot;

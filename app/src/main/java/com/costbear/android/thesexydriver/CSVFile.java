@@ -33,13 +33,14 @@ public class CSVFile {
             Car car;
 
             String csvLine;
+            reader.readLine();
+            reader.readLine();
             while ((csvLine = reader.readLine()) != null) {
 
 
                 String[] row = csvLine.split(",");
 
                 int year = Integer.parseInt(row[0]);
-
                 String make = row[1];
                 String model = row[2];
                 double fuelConsumption = Double.parseDouble(row[8]);
@@ -68,7 +69,7 @@ public class CSVFile {
     {
         try
         {
-            FileWriter writer = new FileWriter("/res/raw/DrivingData.csv", true);
+            FileWriter writer = new FileWriter("/res/raw/drivingdata.csv", true);
 
             writer.append("MKYONG");
             writer.append(',');
@@ -88,7 +89,7 @@ public class CSVFile {
 
     public void readData() {
 
-        String csvFile = "/res/raw/DrivingData.csv";
+        String csvFile = "/res/raw/drivingdata.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
