@@ -58,7 +58,7 @@ public class ItemArrayAdapter extends ArrayAdapter<Car> {
             viewHolder = (ItemViewHolder)row.getTag();
         }
         Car stat = getItem(position);
-        viewHolder.model.setText(stat.getModel());
+        viewHolder.model.setText(stat.getModel() + " Cylinders: " + stat.getCylinders() + " Tran: " + stat.getTransmission());
         return row;
     }
 

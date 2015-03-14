@@ -8,6 +8,8 @@ public class Car {
     int year;
     String make;
     String model;
+    int cylinders;
+    String transmission;
     double fuelConsumption;
     int emissions;
 
@@ -20,10 +22,12 @@ public class Car {
      * @param fuelConsumption - city fuel consumption in L/100km
      * @param emissions - CO2 emissions in g/km
      */
-    public Car(int year, String make, String model, double fuelConsumption, int emissions) {
+    public Car(int year, String make, String model, int cylinders, String transmission, double fuelConsumption, int emissions) {
         this.year = year;
         this.make = make;
         this.model = model;
+        this.cylinders = cylinders;
+        this.transmission = transmission;
         this.fuelConsumption = fuelConsumption;
         this.emissions = emissions;
     }
@@ -68,5 +72,21 @@ public class Car {
 
     public void setFuelConsumption(float fuelConsumption) {
         this.fuelConsumption = fuelConsumption;
+    }
+
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public void setCylinders(int cylinders) {
+        this.cylinders = cylinders;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
     }
 }

@@ -45,10 +45,12 @@ public class CSVFile {
                 int year = Integer.parseInt(row[0]);
                 String make = row[1];
                 String model = row[2];
+                int cylinders = Integer.parseInt(row[5]);
+                String transmission = row[6];
                 double fuelConsumption = Double.parseDouble(row[8]);
                 int emissions = Integer.parseInt(row[12]);
 
-                car = new Car(year, make, model, fuelConsumption, emissions);
+                car = new Car(year, make, model, cylinders, transmission, fuelConsumption, emissions);
 
                 resultList.add(car);
             }
