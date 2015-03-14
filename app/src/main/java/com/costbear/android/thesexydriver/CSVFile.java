@@ -4,6 +4,9 @@ package com.costbear.android.thesexydriver;
  * Created by vincentchan on 15-03-13.
  */
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,7 +15,11 @@ import java.util.List;
 
 public class CSVFile {
     InputStream inputStream;
+    private ArrayList<String[]> dataList;
 
+    public CSVFile() {
+
+    }
     public CSVFile(InputStream inputStream){
 
         this.inputStream = inputStream;
@@ -55,5 +62,56 @@ public class CSVFile {
             }
         }
         return resultList;
+    }
+
+    public void writeData()
+    {
+        try
+        {
+            FileWriter writer = new FileWriter("/res/raw/DrivingData.csv", true);
+
+            writer.append("MKYONG");
+            writer.append(',');
+            writer.append("26");
+            writer.append('\n');
+            //generate whatever data you want
+
+            writer.flush();
+            writer.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void readData() {
+
+        String csvFile = "/res/raw/DrivingData.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+                String[] drivingData = line.split(cvsSplitBy);
+                dataList.add(drivingData);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
