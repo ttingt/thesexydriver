@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -113,8 +114,17 @@ public class ProfileActivity extends ActionBarActivity {
                         double fuelConsumption = (Double) car.getFuelConsumption();
                         int emissions = (Integer) car.getEmissions();
 
+                        Intent i = new Intent(ProfileActivity.this, AccelerationManagerActivity.class);
+                        startActivity(i);
+                        finish();
 
-                        Toast.makeText(getApplicationContext(), model, Toast.LENGTH_SHORT).show();
+                        i.putExtra("carYear", year);
+                        i.putExtra("carMake", make);
+                        i.putExtra("carModel", model);
+                        i.putExtra("carCylinders", cylinders);
+                        i.putExtra("carTransmission", transmission);
+                        i.putExtra("carFuelConsumption", fuelConsumption);
+                        i.putExtra("carEmissions", emissions);
 
                     }
                 });
