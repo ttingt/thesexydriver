@@ -7,12 +7,11 @@ import java.util.Date;
  * I have getters for acceleration in a different class - yves
  */
 public class BrakePoint {
-    private double accelerationVector;
     private AccelerometerTestActivity accelerometer;
     private Date date;
     private float lat;
     private float lng;
-    private int breakCount;
+    private int breakCount = 0;
 
     public BrakePoint(AccelerometerTestActivity accelerometer, float lat, float lng) {
         this.accelerometer = accelerometer;
@@ -30,5 +29,31 @@ public class BrakePoint {
     public float getLng() {
         return lng;
     }
-    public void breaks
+
+    /**
+     * This method should be called every time sensor is changed
+     */
+    public void brakes() {
+        if(accelerometer.getmAccel() < -10) {
+            breakCount ++;
+        }
+    }
+
+    /**
+     * This method should be called every time sensor is changed
+     */
+    public double timeForBrake(){
+        double startTime;
+        double endTime;
+        double difference;
+        if(accelerometer.getmAccel() < -10) {
+            startTime = System.currentTimeMillis();
+        }
+        if (accelerometer.getmAccel() > 0) {
+            endTime = System.currentTimeMillis();
+        }
+        difference = endTime - startTime;
+        return difference;
+    }
+
 }
