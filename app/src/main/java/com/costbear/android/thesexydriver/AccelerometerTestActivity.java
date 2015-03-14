@@ -67,6 +67,18 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 
     }
 
+    public double getAccelerationX() {
+        return accelerationX;
+    }
+
+    public double getAccelerationY() {
+        return accelerationY;
+    }
+
+    public double getAccelerationZ() {
+        return accelerationZ;
+    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
