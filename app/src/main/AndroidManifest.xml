@@ -10,6 +10,15 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter> PUT THIS BACK HERE AFTER TESTING ACCELEROMETER IS DONE-->
+        </activity>
+        <activity
+            android:name=".AccelerometerTestActivity"
+            android:label="@string/title_activity_accelerometer_test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
