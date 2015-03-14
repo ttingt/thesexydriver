@@ -38,12 +38,12 @@ public class SummaryActivity extends ActionBarActivity {
         String brakeR;
         String speedR;
         String overallRating;
-        if( brakePtsCount < 10) {
+        if( brakePtsCount < 1) {
             brakeR = "Waiting to get more data points first!";
         } else {
             brakeR = String.valueOf(brakeRatingSoFar/brakePtsCount);
         }
-        if(speedPtsCount < 10) {
+        if(speedPtsCount < 1) {
             speedR = "Waiting to get more data points first!";
         } else {
             speedR = String.valueOf(speedRatingSoFar/speedPtsCount);

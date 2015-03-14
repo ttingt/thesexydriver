@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,8 @@ import android.location.LocationManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This file is still being implemented
@@ -51,6 +54,11 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     private Button stopButton;
 
+    Timer timer;
+    TimerTask timerTask;
+    String provider = LocationManager.GPS_PROVIDER;
+    List<Location> locs;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,35 +71,64 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         speedPtsCount = 0;
         speedRatingSoFar = 0;
         brakeRatingSoFar = 0;
+        locs = new ArrayList<Location>();
         accelPts = new ArrayList<AccelerationPoint>();
         brakePts = new ArrayList<BrakePoint>();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
-        LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
+
+
+
+        Criteria criteria = new Criteria();
+        criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
+        criteria.setSpeedRequired(true);
+        criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
+        locationManager.getBestProvider(criteria, true);
+
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            public void run() {
+                Location lastLoc = locationManager.getLastKnownLocation(provider);
+                locs.add(lastLoc);
+                double speed;
+                if (locs.size() > 1) {
+                    Location prevLastLoc = locs.get(locs.size() - 2);
+                    speed = prevLastLoc.distanceTo(lastLoc) / 10 *72000;
+                } else {
+                    speed = 0;
+                }
+                AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
+                updateSpeedRatingSoFar(ap);
+            };
+        };
+        timer.schedule(timerTask, 0, 10000);
+
+
 
         // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-
-
-            public void onLocationChanged(Location location) {
-                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
-                updateSpeedRatingSoFar(newpt);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            public void onProviderDisabled(String provider) {
-
-            }
-
-        };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+//        LocationListener locationListener = new LocationListener() {
+//
+//
+//            public void onLocationChanged(Location location) {
+//                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
+//                updateSpeedRatingSoFar(newpt);
+//            }
+//
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//            }
+//
+//            public void onProviderEnabled(String provider) {
+//
+//            }
+//
+//            public void onProviderDisabled(String provider) {
+//
+//            }
+//
+//        };
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
         stopButton = (Button) findViewById(R.id.stopButton);
         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -150,10 +187,17 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
         int addFactor = 0;
 
-        if (ap.getSpeed()> 90) addFactor = 10;
-        else if (ap.getSpeed()> 80) addFactor = 7;
-        else if (ap.getSpeed()> 70) addFactor = 4;
-        else if (ap.getSpeed()> 50) addFactor = 1;
+        if (ap.getSpeed()> 0) {
+            addFactor = 10;
+        } else if (ap.getSpeed()> 80) {
+            addFactor = 7;
+        }
+        else if (ap.getSpeed()> 70) {
+            addFactor = 4;
+        }
+        else if (ap.getSpeed()> 50) {
+            addFactor = 1;
+        }
 
         speedRatingSoFar += addFactor;
         return speedRatingSoFar;
@@ -182,6 +226,10 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
    public void stopMeasurements() {
        sensorManager.unregisterListener(this);
+       if (timer != null) {
+           timer.cancel();
+           timer = null;
+       }
    }
 
    public void displaySummaryPage() {
@@ -194,6 +242,4 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        startActivity(i);
        finish();
    }
-
-
 }
