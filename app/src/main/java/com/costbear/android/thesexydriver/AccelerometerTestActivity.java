@@ -19,7 +19,8 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private TextView accelerationTextView;
     private double accelerationX;
     private double accelerationY;
-    private double accelerationZ;
+    private float accelerationZ;
+    private double accelerationVector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         setContentView(R.layout.activity_accelerometer_test);
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, 5);
 
         accelerationTextView = (TextView) findViewById(R.id.acceleration_xyz_textView);
     }
@@ -77,6 +78,11 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 
     public double getAccelerationZ() {
         return accelerationZ;
+    }
+
+    public double getAccelerationVector() {
+        accelerationVector = Math.sqrt(Math.pow(accelerationX,2) + Math.pow(accelerationY,2));//square x and y
+        return accelerationVector;
     }
 
     @Override
