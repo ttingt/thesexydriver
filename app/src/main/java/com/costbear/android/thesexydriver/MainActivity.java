@@ -33,7 +33,9 @@ public class MainActivity extends Activity {
 
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
                 Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+
                 startActivity(i);
                 finish();
             }
