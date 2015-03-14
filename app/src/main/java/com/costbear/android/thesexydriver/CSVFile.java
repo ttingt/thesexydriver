@@ -1,8 +1,8 @@
 package com.costbear.android.thesexydriver;
 
 /**
- * Created by vincentchan on 15-03-13.
- */
+* Created by vincentchan on 15-03-13.
+*/
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
