@@ -26,6 +26,7 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private double accelerationY;
     private double accelerationZ;
     private double accelerationVector;
+    private BrakePoint breakPoint;
 
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
@@ -45,6 +46,7 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         accelerationTextView = (TextView) findViewById(R.id.acceleration_xyz_textView);
+        breakPoint = new BrakePoint(this,0,0);
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
@@ -83,13 +85,14 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
                     Math.pow(accelerationZ, 2));
             double delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
+            breakPoint.brakes();
 
 
             accelerationTextView.setText("X:" + accelerationX +
                     "\nY: " + accelerationY +
                     "\nZ: " + accelerationZ +
                     "\nmAccel: " + mAccel +
-                    "\naccelVals" + accelVals); //These are the X,Y,Z accelerations in m/s^2
+                    "\nBreakCount" + breakPoint.getBreakCount()); //These are the X,Y,Z accelerations in m/s^2
     }
 
     public double getmAccel() {
