@@ -17,6 +17,9 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private Sensor accelerometer;
     private SensorManager sensorManager;
     private TextView accelerationTextView;
+    private double accelerationX;
+    private double accelerationY;
+    private double accelerationZ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +57,13 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        accelerationX = event.values[0];
+        accelerationY = event.values[1];
+        accelerationZ = event.values[2];
+
+        accelerationTextView.setText("X:" + accelerationX+
+                "\nY: " + accelerationY +
+                "\nZ: " + accelerationZ); //These are the X,Y,Z accelerations in m/s^2
 
     }
 
