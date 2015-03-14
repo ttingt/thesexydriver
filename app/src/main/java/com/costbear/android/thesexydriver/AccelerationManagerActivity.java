@@ -48,6 +48,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
     private double mAccelLast; //last acceleration including gravity
+    private List AccelArray;
 
     private double latitude;
     private double longitude;
@@ -58,6 +59,12 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     TimerTask timerTask;
     String provider = LocationManager.GPS_PROVIDER;
     List<Location> locs;
+
+    double sumAccel;
+    int n;
+
+    double sumDistance;
+
 
 
     @Override
@@ -79,6 +86,10 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         mAccelLast = SensorManager.GRAVITY_EARTH;
         final LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
 
+        sumAccel =0;
+        sumDistance =0;
+        n = 0;
+
 
 
         Criteria criteria = new Criteria();
@@ -88,6 +99,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         locationManager.getBestProvider(criteria, true);
 
         timer = new Timer();
+
         timerTask = new TimerTask() {
             public void run() {
                 Location lastLoc = locationManager.getLastKnownLocation(provider);
@@ -96,6 +108,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                 if (locs.size() > 1) {
                     Location prevLastLoc = locs.get(locs.size() - 2);
                     speed = prevLastLoc.distanceTo(lastLoc) / 10 *72000;
+                    sumDistance += prevLastLoc.distanceTo(lastLoc);
                 } else {
                     speed = 0;
                 }
@@ -159,6 +172,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
             mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
             BrakePoint bp = new BrakePoint(mAccel);
             updateBrakeRatingSoFar(bp);
+            sumAccel += mAccel;
+            n++;
 //            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
     }
 //
@@ -238,8 +253,14 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
        i.putExtra("speedPtsCount", speedPtsCount);
        i.putExtra("speedRatingSoFar", speedRatingSoFar);
+       i.putExtra("AverageAccelerometer", sumAccel/n);
+       i.putExtra("SumDistance", sumDistance/1000); //in kM
 
        startActivity(i);
        finish();
    }
+
+    public void trackAccel() {
+
+    }
 }
