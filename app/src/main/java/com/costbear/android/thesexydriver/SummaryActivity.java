@@ -49,17 +49,16 @@ public class SummaryActivity extends ActionBarActivity {
             speedR = String.valueOf(speedRatingSoFar/speedPtsCount);
         }
 
-        if (brakePtsCount >= 10 && speedPtsCount >= 10) {
+        if (brakePtsCount >= 3 && speedPtsCount >= 1) {
             overallRating = String.valueOf(Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6));
         } else {
             overallRating = "Drive just a bit more first :3";
         }
-//
+
         brakingRatingTextView.setText(brakeR);
         System.out.println(speedR);
         speedRatingTextView.setText(speedR);
-//
-//        ratingTextView.setText(overallRating);
+        ratingTextView.setText(overallRating);
 
     }
 
