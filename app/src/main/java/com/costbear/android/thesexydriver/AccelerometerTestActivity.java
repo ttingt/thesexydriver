@@ -25,7 +25,9 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private double accelerationY;
     private double accelerationZ;
     private double accelerationVector;
-    private double[] accelerationData;
+    private double mAccel; //acceleration apart from gravity
+    private double mAccelCurrent; //acceleration including gravity
+    private double mAccelLast; //last acceleration including gravity
 
 
     @Override
@@ -34,8 +36,7 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         setContentView(R.layout.activity_accelerometer_test);
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer, 5);
-
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         accelerationTextView = (TextView) findViewById(R.id.acceleration_xyz_textView);
     }
 
@@ -67,11 +68,18 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         accelerationX = event.values[0];
         accelerationY = event.values[1];
         accelerationZ = event.values[2];
+        mAccelLast = mAccelCurrent;
+        mAccelCurrent = Math.sqrt(Math.pow(accelerationX,2) + Math.pow(accelerationY,2) +
+                Math.pow(accelerationZ,2));
+        double delta = mAccelCurrent - mAccelLast;
+        mAccel = mAccel * 0.9f + delta;
+
 
         accelerationTextView.setText("X:" + accelerationX+
                 "\nY: " + accelerationY +
-                "\nZ: " + accelerationZ
-                "\nVector of X and Y: "+ accelerationVector); //These are the X,Y,Z accelerations in m/s^2
+                "\nZ: " + accelerationZ +
+                "\nmAccel: "+ mAccel); //These are the X,Y,Z accelerations in m/s^2
+
 
     }
 
@@ -88,7 +96,8 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     }
 
     public double getAccelerationVector() {
-        accelerationVector = Math.sqrt(Math.pow(accelerationX,2) + Math.pow(accelerationY,2));//square x and y
+        accelerationVector = Math.sqrt(Math.pow(accelerationX,2) + Math.pow(accelerationY,2) +
+                Math.pow(accelerationZ,2));//square x and y and z
         return accelerationVector;
     }
 
@@ -113,8 +122,10 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 //        }
 //        return output;
 //    }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 }
