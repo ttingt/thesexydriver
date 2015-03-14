@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This file is still being implemented
@@ -25,9 +26,15 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
     private double accelerationY;
     private double accelerationZ;
     private double accelerationVector;
+
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
     private double mAccelLast; //last acceleration including gravity
+    private float[] accelVals;
+    private float alpha = 0.5f;
+    long lastSaved = System.currentTimeMillis();
+    static int ACCE_FILTER_DATA_MIN_TIME = 1000;
+
 
 
     @Override
@@ -38,6 +45,9 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         accelerationTextView = (TextView) findViewById(R.id.acceleration_xyz_textView);
+        mAccel = 0.00f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
     }
 
 
@@ -65,22 +75,25 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        accelerationX = event.values[0];
-        accelerationY = event.values[1];
-        accelerationZ = event.values[2];
-        mAccelLast = mAccelCurrent;
-        mAccelCurrent = Math.sqrt(Math.pow(accelerationX,2) + Math.pow(accelerationY,2) +
-                Math.pow(accelerationZ,2));
-        double delta = mAccelCurrent - mAccelLast;
-        mAccel = mAccel * 0.9f + delta;
+            accelerationX = event.values[0];
+            accelerationY = event.values[1];
+            accelerationZ = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = Math.sqrt(Math.pow(accelerationX, 2) + Math.pow(accelerationY, 2) +
+                    Math.pow(accelerationZ, 2));
+            double delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
 
 
-        accelerationTextView.setText("X:" + accelerationX+
-                "\nY: " + accelerationY +
-                "\nZ: " + accelerationZ +
-                "\nmAccel: "+ mAccel); //These are the X,Y,Z accelerations in m/s^2
+            accelerationTextView.setText("X:" + accelerationX +
+                    "\nY: " + accelerationY +
+                    "\nZ: " + accelerationZ +
+                    "\nmAccel: " + mAccel +
+                    "\naccelVals" + accelVals); //These are the X,Y,Z accelerations in m/s^2
+    }
 
-
+    public double getmAccel() {
+        return mAccel;
     }
 
     public double getAccelerationX() {
@@ -100,28 +113,6 @@ public class AccelerometerTestActivity extends ActionBarActivity implements Sens
                 Math.pow(accelerationZ,2));//square x and y and z
         return accelerationVector;
     }
-
-
-//    public void onSensorChanged(SensorEvent event) {
-//        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-//            accelVals = lowPass( event.values, accelVals );
-//
-//        // use smoothed accelVals here; see this link for a simple compass example:
-//        // http://www.codingforandroid.com/2011/01/using-orientation-sensors-simple.html
-//    }
-//
-//    /**
-//     * @see http://en.wikipedia.org/wiki/Low-pass_filter#Algorithmic_implementation
-//     * @see http://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter
-//     */
-//    protected float[] lowPass( float[] input, float[] output ) {
-//        if ( output == null ) return input;
-//
-//        for ( int i=0; i<input.length; i++ ) {
-//            output[i] = output[i] + ALPHA * (input[i] - output[i]);
-//        }
-//        return output;
-//    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
