@@ -10,8 +10,6 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="Your driving rates a..."
-        android:textColor="@color/"
-        android:layout_marginleft="20dp"
         android:textAlignment="center"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"/>
@@ -71,7 +69,7 @@
         android:layout_below="@id/braking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Braking"
+        android:text="Speeding"
         android:textSize="22sp"
         android:paddingLeft="15dp" />
 
@@ -84,6 +82,15 @@
         android:text="Speed goes here"
         android:paddingLeft="15dp"
         android:layout_marginLeft="200dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/button"
+        android:layout_marginBottom="42dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>
