@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/overallrating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Your driving rates a..."
+        android:textColor="@color/"
+        android:layout_marginleft="20dp"
+        android:textAlignment="center"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"/>
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_below="@id/overallrating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="10/10"
+        android:textSize="70sp"
+        android:layout_marginLeft="20dp"
+        android:paddingLeft="15dp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/ratingmsg"
+        android:layout_below="@id/rating"
+        android:text="You are a sexy driver!"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginLeft="40dp"/>
+
+    <TextView
+        android:id="@+id/detailsheading"
+        android:layout_below="@id/ratingmsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        android:textSize="22sp"
+        android:padding="15dp"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:id="@+id/braking"
+        android:layout_below="@id/detailsheading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Braking"
+        android:textSize="22sp"
+        android:paddingLeft="15dp" />
+
+    <TextView
+        android:id="@+id/brakingrating"
+        android:layout_below="@id/detailsheading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Rating goes here"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="200dp" />
+
+    <TextView
+        android:id="@+id/speeding"
+        android:layout_below="@id/braking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Braking"
+        android:textSize="22sp"
+        android:paddingLeft="15dp" />
+
+    <TextView
+        android:id="@+id/speedingrating"
+        android:layout_below="@id/brakingrating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="Speed goes here"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="200dp" />
+
+
+</RelativeLayout>
