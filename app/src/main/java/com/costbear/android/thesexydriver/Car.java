@@ -89,4 +89,8 @@ public class Car {
     public void setTransmission(String transmission) {
         this.transmission = transmission;
     }
+
+    public int getEmissions() {
+        return emissions;
+    }
 }
