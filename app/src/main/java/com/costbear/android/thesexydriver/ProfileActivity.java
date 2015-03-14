@@ -3,12 +3,17 @@ package com.costbear.android.thesexydriver;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+//import android.support.v7.internal.widget.AdapterViewCompat;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+//import android.widget.AdapterView.OnItemClickListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -40,7 +45,12 @@ public class ProfileActivity extends ActionBarActivity {
 
         carList = csvFile.read();
 
+
+
         done.setOnClickListener(new View.OnClickListener() {
+
+
+
             @Override
             public void onClick(View v) {
                 year = (EditText) findViewById(R.id.yearField);
@@ -88,14 +98,50 @@ public class ProfileActivity extends ActionBarActivity {
                     itemArrayAdapter.add(c);
                 }
 
+
+
                 //itemArrayAdapter = new ItemArrayAdapter(this, carModelsList);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //String string = parent.getItemAtPosition(position);
+
+                        Car car = (Car) itemArrayAdapter.getItem(position);
+
+                        String string = (String) car.getModel();
+
+                        Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show();
+
+                    }
+                });
 
 
             }
 
+
         });
 
+//
+
+//
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3)
+//            {
+//                String data = (String) arg0.getItemAtPosition(arg2);
+//
+//                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//
+//        });
+
     }
+
+
+
+
+
 
 
     @Override
@@ -119,4 +165,5 @@ public class ProfileActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
