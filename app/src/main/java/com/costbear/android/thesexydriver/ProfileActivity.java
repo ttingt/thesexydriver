@@ -98,10 +98,6 @@ public class ProfileActivity extends ActionBarActivity {
                     itemArrayAdapter.add(c);
                 }
 
-
-
-                //itemArrayAdapter = new ItemArrayAdapter(this, carModelsList);
-
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -109,9 +105,16 @@ public class ProfileActivity extends ActionBarActivity {
 
                         Car car = (Car) itemArrayAdapter.getItem(position);
 
-                        String string = (String) car.getModel();
+                        int year = (Integer) car.getYear();
+                        String make = (String) car.getMake();
+                        String model = (String) car.getModel();
+                        int cylinders = (Integer) car.getCylinders();
+                        String transmission = (String) car.getTransmission();
+                        double fuelConsumption = (Double) car.getFuelConsumption();
+                        int emissions = (Integer) car.getEmissions();
 
-                        Toast.makeText(getApplicationContext(), string, Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(getApplicationContext(), model, Toast.LENGTH_SHORT).show();
 
                     }
                 });
