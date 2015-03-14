@@ -40,25 +40,10 @@ public class BrakePoint {
         }
     }
 
-    public int getBreakCount() {
-        return breakCount;
-    }
 
     /**
      * This method should be called every time sensor is changed
      */
-    public double timeForBrake(){
-        double startTime = 0;
-        double endTime = 0;
-        double difference;
-        if(accelerometer.getmAccel() < -10) {
-            startTime = System.currentTimeMillis();
-        }
-        if (accelerometer.getmAccel() > 0) {
-            endTime = System.currentTimeMillis();
-        }
-        difference = endTime - startTime;
-        return difference;
-    }
+
 
 }
