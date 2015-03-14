@@ -11,6 +11,7 @@ public class BrakePoint {
     private Date date;
     private float lat;
     private float lng;
+
     private int breakCount = 0;
 
     public BrakePoint(AccelerometerTestActivity accelerometer, float lat, float lng) {
@@ -37,6 +38,10 @@ public class BrakePoint {
         if(accelerometer.getmAccel() < -10) {
             breakCount ++;
         }
+    }
+
+    public int getBreakCount() {
+        return breakCount;
     }
 
     /**
