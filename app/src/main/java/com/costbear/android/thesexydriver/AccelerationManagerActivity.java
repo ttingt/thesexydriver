@@ -41,7 +41,9 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private int speedPtsCount;
     private List<AccelerationPoint> accelPts;
     private int speedRatingSoFar;
-    int brakeCount;
+    private int brakePtsCount;
+    private List<BrakePoint> brakePts;
+    private int brakeRatingSoFar;
 
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
@@ -64,7 +66,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         brakingRatingTextView = (TextView) findViewById(R.id.brakingrating);
         ratingTextView = (TextView) findViewById(R.id.rating);
         ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
-        brakeCount = 0;
+        brakePtsCount = 0;
         accelPts = new ArrayList<AccelerationPoint>();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
@@ -105,23 +107,23 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                     Math.pow(accelerationZ, 2));
             double delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
-            timeForBrake();
-            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
+            BrakePoint bp = new BrakePoint(mAccel);
+            updateBrakeRatingSoFar(bp);
+//            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
     }
-
-    public double timeForBrake(){
-        double startTime = 0;
-        double endTime = 0;
-        double difference;
-        if(getmAccel() < -10) {
-            startTime = System.currentTimeMillis();
-        }
-        if (getmAccel() > 0) {
-            endTime = System.currentTimeMillis();
-        }
-        difference = endTime - startTime;
-        return difference;
-    }
+//
+//    public double timeForBrake(){
+//        double startTime = 0;
+//        double endTime = 0;
+//        double difference;
+//        if(getmAccel() < -10) {
+//            startTime = System.currentTimeMillis();
+//        } else if (getmAccel() > 0) {
+//            endTime = System.currentTimeMillis();
+//        }
+//        difference = endTime - startTime;
+//        return difference;
+//    }
 
     public double getmAccel() {
         return mAccel;
@@ -137,11 +139,23 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     public int brakeRating() {
         int n = 0;
         int ratingSoFar = 10;
-        if (brakePoint.getBreakCount() % 10 == 0) {
-            n = brakePoint.getBreakCount()/10;
+        if (brakePtsCount % 10 == 0) {
+            n = brakePtsCount/10;
             ratingSoFar -= n;
         }
         return ratingSoFar;
+    }
+
+    public int updateBrakeRatingSoFar(BrakePoint bp) {
+        brakePts.add(bp);
+        brakePtsCount++;
+
+        if (brakePts.size() < 10) return brakeRatingSoFar;
+
+        int addFactor = (int) -bp.getAccel();
+
+        brakeRatingSoFar += addFactor;
+        return brakeRatingSoFar;
     }
 
     public int updateSpeedRatingSoFar(AccelerationPoint ap) {
