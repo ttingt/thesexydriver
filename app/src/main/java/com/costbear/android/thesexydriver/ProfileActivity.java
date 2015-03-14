@@ -45,11 +45,11 @@ public class ProfileActivity extends ActionBarActivity {
             public void onClick(View v) {
                 year = (EditText) findViewById(R.id.yearField);
                 make = (EditText) findViewById(R.id.makeField);
-                model = (EditText) findViewById(R.id.modelField);
+                //model = (EditText) findViewById(R.id.modelField);
 
                 String yearEntered = year.getText().toString();
                 String makeEntered = make.getText().toString();
-                String modelEntered = model.getText().toString();
+                //String modelEntered = model.getText().toString();
 
                 List<Car> filteredCarList = new ArrayList<Car>();
 

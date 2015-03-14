@@ -40,24 +40,24 @@
         android:layout_toRightOf="@id/make"
         android:layout_below="@id/yearField"/>
 
-    <TextView
-        android:id="@+id/model"
-        android:text="Model"
-        android:layout_marginTop="32dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/make"
-        android:textSize="30sp"/>
+    <!--<TextView-->
+        <!--android:id="@+id/model"-->
+        <!--android:text="Model"-->
+        <!--android:layout_marginTop="32dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/make"-->
+        <!--android:textSize="30sp"/>-->
 
-    <EditText
-        android:id="@+id/modelField"
-        android:hint="(eg. Civic)"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/model"
-        android:layout_below="@id/makeField"/>
+    <!--<EditText-->
+        <!--android:id="@+id/modelField"-->
+        <!--android:hint="(eg. Civic)"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_toRightOf="@id/model"-->
+        <!--android:layout_below="@id/makeField"/>-->
 
     <Button
         android:id="@+id/done"
