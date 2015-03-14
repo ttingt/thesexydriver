@@ -16,6 +16,8 @@ import java.util.List;
 public class CSVFile {
     InputStream inputStream;
     private ArrayList<String[]> dataList;
+    List<Car> resultList;
+
 
     public CSVFile() {
 
@@ -26,7 +28,7 @@ public class CSVFile {
     }
 
     public List<Car> read(){
-        List<Car> resultList = new ArrayList<Car>();
+        resultList = new ArrayList<Car>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
         try {
 
