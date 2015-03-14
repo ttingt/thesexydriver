@@ -7,14 +7,14 @@ import java.util.Date;
  * I have getters for acceleration in a different class - yves
  */
 public class BrakePoint {
-    private AccelerometerTestActivity accelerometer;
+    private AccelerationManagerActivity accelerometer;
     private Date date;
     private float lat;
     private float lng;
 
     private int breakCount = 0;
 
-    public BrakePoint(AccelerometerTestActivity accelerometer, float lat, float lng) {
+    public BrakePoint(AccelerationManagerActivity accelerometer, float lat, float lng) {
         this.accelerometer = accelerometer;
         this.date = new Date();
         this.lat = lat;
