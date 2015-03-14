@@ -66,12 +66,14 @@
 
     <TextView
         android:id="@+id/speeding"
-        android:layout_below="@id/braking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Speeding"
         android:textSize="22sp"
-        android:paddingLeft="15dp" />
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/braking"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/speedingrating"
@@ -91,6 +93,28 @@
         android:layout_marginBottom="42dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/distancetravelled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Distance travelled:"
+        android:textSize="22sp"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/speeding"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/distancetravelleddata"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:text="distance in km"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/speeding"
+        android:layout_alignLeft="@+id/speedingrating"
+        android:layout_alignStart="@+id/speedingrating" />
 
 
 </RelativeLayout>
