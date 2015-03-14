@@ -31,13 +31,35 @@ public class SummaryActivity extends ActionBarActivity {
         speedRatingSoFar = i.getIntExtra("speedRatingSoFar", 0);
 
         brakingRatingTextView = (TextView) findViewById(R.id.brakingrating);
+        speedRatingTextView = (TextView) findViewById(R.id.speedingrating);
         ratingTextView = (TextView) findViewById(R.id.rating);
         ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
 
-        brakingRatingTextView.setText(String.valueOf(brakeRatingSoFar/brakePtsCount));
-        speedRatingTextView.setText(String.valueOf(speedRatingSoFar/speedPtsCount));
-        double overallRating = brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6;
-        ratingTextView.setText(String.valueOf(Math.round(overallRating)));
+        String brakeR;
+        String speedR;
+        String overallRating;
+        if( brakePtsCount < 10) {
+            brakeR = "Waiting to get more data points first!";
+        } else {
+            brakeR = String.valueOf(brakeRatingSoFar/brakePtsCount);
+        }
+        if(speedPtsCount < 10) {
+            speedR = "Waiting to get more data points first!";
+        } else {
+            speedR = String.valueOf(speedRatingSoFar/speedPtsCount);
+        }
+
+        if (brakePtsCount >= 10 && speedPtsCount >= 10) {
+            overallRating = String.valueOf(Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6));
+        } else {
+            overallRating = "Drive just a bit more first :3";
+        }
+//
+        brakingRatingTextView.setText(brakeR);
+        System.out.println(speedR);
+        speedRatingTextView.setText(speedR);
+//
+//        ratingTextView.setText(overallRating);
 
     }
 

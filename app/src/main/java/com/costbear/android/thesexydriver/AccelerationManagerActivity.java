@@ -60,7 +60,11 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         brakePtsCount = 0;
+        speedPtsCount = 0;
+        speedRatingSoFar = 0;
+        brakeRatingSoFar = 0;
         accelPts = new ArrayList<AccelerationPoint>();
+        brakePts = new ArrayList<BrakePoint>();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
@@ -93,7 +97,15 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         stopButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopMeasurements();
-                displaySummaryPage();
+
+                Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
+                i.putExtra("brakePtsCount", brakePtsCount);
+                i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
+                i.putExtra("speedPtsCount", speedPtsCount);
+                i.putExtra("speedRatingSoFar", speedRatingSoFar);
+
+                startActivity(i);
+                finish();
             }
         });
     }
@@ -113,47 +125,20 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 //            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
     }
 //
-//    public double timeForBrake(){
-//        double startTime = 0;
-//        double endTime = 0;
-//        double difference;
-//        if(getmAccel() < -10) {
-//            startTime = System.currentTimeMillis();
-//        } else if (getmAccel() > 0) {
-//            endTime = System.currentTimeMillis();
-//        }
-//        difference = endTime - startTime;
-//        return difference;
-//    }
-
-    public double getmAccel() {
-        return mAccel;
-    }
-
-    @Override
+//   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_accelerometer_test, menu);
         return true;
     }
 
-    public int brakeRating() {
-        int n = 0;
-        int ratingSoFar = 10;
-        if (brakePtsCount % 10 == 0) {
-            n = brakePtsCount/10;
-            ratingSoFar -= n;
-        }
-        return ratingSoFar;
-    }
-
-    public int updateBrakeRatingSoFar(BrakePoint bp) {
-        if (bp.getAccel() > -10) return brakeRatingSoFar;
+   public int updateBrakeRatingSoFar(BrakePoint bp) {
+        if (bp.getAccel() >-1) return brakeRatingSoFar;
 
         brakePts.add(bp);
         brakePtsCount++;
 
-        int addFactor = (int) -bp.getAccel();
+        int addFactor = (int) -bp.getAccel()*5;
 
         brakeRatingSoFar += addFactor;
         return brakeRatingSoFar;
@@ -196,8 +181,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     }
 
    public void stopMeasurements() {
-       sensorManager = null;
-       accelerometer = null;
+       sensorManager.unregisterListener(this);
    }
 
    public void displaySummaryPage() {
