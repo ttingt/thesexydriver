@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,6 +23,11 @@ public class ProfileActivity extends ActionBarActivity {
     CSVFile csvFile;
     InputStream inputStream;
     List<Car> carList;
+
+    ListView listView;
+
+    ItemArrayAdapter itemArrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +59,36 @@ public class ProfileActivity extends ActionBarActivity {
                     }
                 }
 
-                for (int i = 0; i < filteredCarList.size(); i++) {
-                    if (makeEntered.equals(filteredCarList.get(i).getMake())) {
-                        filteredCarList.remove(i);
+                List<Car> filteredByMake = new ArrayList<Car>();
+
+                for (Car c : filteredCarList) {
+                    if (makeEntered.equalsIgnoreCase(c.getMake())) {
+                        filteredByMake.add(c);
                     }
                 }
+
+                List<String> carModelsList = new ArrayList<String>();
+
+                for (Car c : filteredCarList) {
+                    String model;
+                    model = c.getModel();
+
+                    carModelsList.add(model);
+
+                }
+
+                listView = (ListView) findViewById(R.id.listview);
+                itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.row_models);
+
+                Parcelable state = listView.onSaveInstanceState();
+                listView.setAdapter(itemArrayAdapter);
+                listView.onRestoreInstanceState(state);
+
+                for (Car c : filteredByMake) {
+                    itemArrayAdapter.add(c);
+                }
+
+                //itemArrayAdapter = new ItemArrayAdapter(this, carModelsList);
 
 
             }
