@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.costbear.android.thesexydriver.ProfileActivity">
+
+    <TextView
+        android:id="@+id/year"
+        android:text="Year"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/yearField"
+        android:text="enter year (yyyy)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"/>
+
+    <TextView
+        android:id="@+id/make"
+        android:text="Make"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/year"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:id="@+id/makeField"
+        android:text="(eg. Honda)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@id/make"
+        android:layout_below="@id/yearField"/>
+
+    <TextView
+        android:id="@+id/model"
+        android:text="Model"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/make"
+        android:textSize="30sp"/>
+
+    <EditText
+        android:text="(eg. Civic)"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/model"
+        android:layout_below="@id/makeField"/>
+
+</RelativeLayout>
