@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -8,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,11 +30,6 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     private Sensor accelerometer;
     private SensorManager sensorManager;
-    private TextView speedingRatingTextView;
-    private TextView brakingRatingTextView;
-    private TextView ratingTextView;
-    private TextView ratingMsgTextView;
-    private Button stop;
 
     private double accelerationX;
     private double accelerationY;
@@ -52,20 +49,16 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private double latitude;
     private double longitude;
 
-
+    private Button stopButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary_view);
+        setContentView(R.layout.driving_layout);
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        speedingRatingTextView = (TextView) findViewById(R.id.speedingrating);
-        brakingRatingTextView = (TextView) findViewById(R.id.brakingrating);
-        ratingTextView = (TextView) findViewById(R.id.rating);
-        ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
         brakePtsCount = 0;
         accelPts = new ArrayList<AccelerationPoint>();
         mAccel = 0.00f;
@@ -95,6 +88,14 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
         };
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+
+        stopButton = (Button) findViewById(R.id.stopButton);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopMeasurements();
+                displaySummaryPage();
+            }
+        });
     }
 
     @Override
@@ -147,10 +148,10 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     }
 
     public int updateBrakeRatingSoFar(BrakePoint bp) {
+        if (bp.getAccel() > -10) return brakeRatingSoFar;
+
         brakePts.add(bp);
         brakePtsCount++;
-
-        if (brakePts.size() < 10) return brakeRatingSoFar;
 
         int addFactor = (int) -bp.getAccel();
 
@@ -161,8 +162,6 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     public int updateSpeedRatingSoFar(AccelerationPoint ap) {
         accelPts.add(ap);
         speedPtsCount++;
-
-        if (accelPts.size() < 10) return speedRatingSoFar;
 
         int addFactor = 0;
 
@@ -196,8 +195,21 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     }
 
-    public int speedRating() {
-        return 0;
-    }
+   public void stopMeasurements() {
+       sensorManager = null;
+       accelerometer = null;
+   }
+
+   public void displaySummaryPage() {
+       Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
+       i.putExtra("brakePtsCount", brakePtsCount);
+       i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
+       i.putExtra("speedPtsCount", speedPtsCount);
+       i.putExtra("speedRatingSoFar", speedRatingSoFar);
+
+       startActivity(i);
+       finish();
+   }
+
 
 }
