@@ -43,8 +43,8 @@ public class BrakePoint {
      * This method should be called every time sensor is changed
      */
     public double timeForBrake(){
-        double startTime;
-        double endTime;
+        double startTime = 0;
+        double endTime = 0;
         double difference;
         if(accelerometer.getmAccel() < -10) {
             startTime = System.currentTimeMillis();
