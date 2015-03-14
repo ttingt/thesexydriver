@@ -8,18 +8,27 @@ import java.util.Date;
  */
 public class BrakePoint {
     private double accelerationVector;
+    private AccelerometerTestActivity accelerometer;
     private Date date;
     private float lat;
     private float lng;
+    private int breakCount;
 
-    public BrakePoint(double accelerationVector, float lat, float lng) {
-        this.accelerationVector = accelerationVector;
+    public BrakePoint(AccelerometerTestActivity accelerometer, float lat, float lng) {
+        this.accelerometer = accelerometer;
         this.date = new Date();
         this.lat = lat;
         this.lng = lng;
     }
 
-    public Date getDate() { return date; }
-    public float getLat() { return lat; }
-    public float getLng() { return lng; }
+    public Date getDate() {
+        return date;
+    }
+    public float getLat() {
+        return lat;
+    }
+    public float getLng() {
+        return lng;
+    }
+    public void breaks
 }
