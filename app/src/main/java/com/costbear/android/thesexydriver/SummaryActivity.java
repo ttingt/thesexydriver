@@ -2,6 +2,7 @@ package com.costbear.android.thesexydriver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,9 +32,9 @@ public class SummaryActivity extends Activity {
     TextView emissions;
     TextView totaldistance;
 
-    Button reset;
-    Button stats;
-    Button credits;
+    ImageButton reset;
+    ImageButton stats;
+    ImageButton credits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,18 @@ public class SummaryActivity extends Activity {
         fuelConsumption = (TextView) findViewById(R.id.fuelconsumption);
         emissions = (TextView) findViewById(R.id.emissions);
         totaldistance = (TextView) findViewById(R.id.totaldistance);
-        reset = (Button) findViewById(R.id.reset);
-        stats = (Button) findViewById(R.id.stats);
-        credits = (Button) findViewById(R.id.credits);
+        reset = (ImageButton) findViewById(R.id.home);
+        stats = (ImageButton) findViewById(R.id.stats);
+        credits = (ImageButton) findViewById(R.id.credits);
+
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+        brakingRatingTextView.setTypeface(face);
+        speedRatingTextView.setTypeface(face);
+        ratingTextView.setTypeface(face);
+        ratingMsgTextView.setTypeface(face);
+        fuelConsumption.setTypeface(face);
+        emissions.setTypeface(face);
+        totaldistance.setTypeface(face);
 
         reset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
