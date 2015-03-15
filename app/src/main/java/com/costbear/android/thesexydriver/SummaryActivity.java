@@ -68,9 +68,6 @@ public class SummaryActivity extends Activity {
             double speedingPercentage = 1 + (double)speedRatingSoFar/(double)speedPtsCount * 0.033;
             double score = ((double) initialScore ) * brakingPercentage * speedingPercentage;
             overallScore = (int) score;
-            System.out.println("brakes: " + brakeRatingSoFar + " " + brakePtsCount);
-            System.out.println("percentage: " + brakingPercentage + " " + speedingPercentage);
-            System.out.println("score: " + String.valueOf(initialScore) + " " + String.valueOf(brakeRatingSoFar/brakePtsCount*1/20) + " " + String.valueOf(1-speedRatingSoFar/speedPtsCount/50) );
             if (overallScore < 0) overallScore=0;
             overallRating = String.valueOf(overallScore) + " out of 10";
         } else {
