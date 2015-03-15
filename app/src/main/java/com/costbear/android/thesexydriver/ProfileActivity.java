@@ -114,6 +114,8 @@ public class ProfileActivity extends ActionBarActivity {
                         double fuelConsumption = (Double) car.getFuelConsumption();
                         int emissions = (Integer) car.getEmissions();
 
+                        Toast.makeText(getApplicationContext(), make, Toast.LENGTH_SHORT).show();
+
                         Intent i = new Intent(ProfileActivity.this, AccelerationManagerActivity.class);
                         startActivity(i);
                         finish();

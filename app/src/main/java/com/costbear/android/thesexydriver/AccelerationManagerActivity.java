@@ -167,9 +167,13 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                 i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
                 i.putExtra("speedPtsCount", speedPtsCount);
                 i.putExtra("speedRatingSoFar", speedRatingSoFar);
+                i.putExtra("AverageAccelerometer", sumAccel/n);
+                i.putExtra("SumDistance", sumDistance/1000); //in kM
 
                 startActivity(i);
                 finish();
+
+
             }
         });
     }
@@ -259,7 +263,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
            timer.cancel();
            timer = null;
        }
-       displaySummaryPage();
+       //displaySummaryPage();
    }
 
    public void displaySummaryPage() {
@@ -274,6 +278,10 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        startActivity(i);
        finish();
    }
+
+    public double avgAccel() {
+        return sumAccel / n;
+    }
 
 
 }
