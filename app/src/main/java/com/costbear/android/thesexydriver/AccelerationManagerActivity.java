@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import android.content.Context;
@@ -30,7 +32,7 @@ import java.util.TimerTask;
  * @author yves
  * @version 1.0
  */
-public class AccelerationManagerActivity extends ActionBarActivity implements SensorEventListener{
+public class AccelerationManagerActivity extends Activity implements SensorEventListener{
 
     private Sensor accelerometer;
     private SensorManager sensorManager;
@@ -50,7 +52,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private double mAccelCurrent; //acceleration including gravity
     private double mAccelLast; //last acceleration including gravity
 
-    private Button stopButton;
+    private ImageButton stopButton;
 
     private List<Location> locations;
 
@@ -160,7 +162,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         };
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
-        stopButton = (Button) findViewById(R.id.stopButton);
+        stopButton = (ImageButton) findViewById(R.id.stopButton);
         stopButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopMeasurements();
