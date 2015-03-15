@@ -33,11 +33,11 @@ public class Car {
     }
 
     public double fuelConsumed() {
-        return fuelConsumption / 100; // * distanceTraveled * accel multiplier
+        return fuelConsumption / 100 * AccelerationManagerActivity.sumDistance;
     }
 
     public double co2Emitted() {
-        return emissions; // * distanceTravelled * accel multiplier
+        return emissions * AccelerationManagerActivity.sumDistance;
     }
 
 
@@ -46,49 +46,29 @@ public class Car {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public String getMake() {
         return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
+
 
     public double getFuelConsumption() {
         return fuelConsumption;
-    }
-
-    public void setFuelConsumption(float fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
     }
 
     public int getCylinders() {
         return cylinders;
     }
 
-    public void setCylinders(int cylinders) {
-        this.cylinders = cylinders;
-    }
 
     public String getTransmission() {
         return transmission;
     }
 
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
 
     public int getEmissions() {
         return emissions;

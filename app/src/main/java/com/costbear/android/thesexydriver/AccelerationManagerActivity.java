@@ -60,10 +60,12 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     String provider = LocationManager.GPS_PROVIDER;
     List<Location> locs;
 
-    double sumAccel;
-    int n;
+    public static double sumAccel;
+    private int n;
 
-    double sumDistance;
+    public static double sumDistance;
+
+    Car car;
 
 
 
@@ -86,10 +88,22 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         mAccelLast = SensorManager.GRAVITY_EARTH;
         final LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
 
-        sumAccel =0;
+        sumAccel = 0;
         sumDistance =0;
         n = 0;
 
+
+        //INTENTS EXTRAS FROM PROFILE ACTIVITY
+
+        int year = getIntent().getIntExtra("carYear", 2000);
+        String make = getIntent().getStringExtra("carMake");
+        String model = getIntent().getStringExtra("carModel");
+        int cylinders = getIntent().getIntExtra("carCylinders", 4);
+        String transmission = getIntent().getStringExtra("carTransmission");
+        double fuelConsumption = getIntent().getDoubleExtra("carFuelConsumption", 0);
+        int emissions = getIntent().getIntExtra("carEmissions", 0);
+
+        car = new Car(year, make, model, cylinders, transmission, fuelConsumption, emissions);
 
 
         Criteria criteria = new Criteria();
@@ -245,6 +259,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
            timer.cancel();
            timer = null;
        }
+       displaySummaryPage();
    }
 
    public void displaySummaryPage() {
@@ -260,7 +275,5 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        finish();
    }
 
-    public void trackAccel() {
 
-    }
 }
