@@ -117,17 +117,22 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         timerTask = new TimerTask() {
             public void run() {
                 Location lastLoc = locationManager.getLastKnownLocation(provider);
-                locs.add(lastLoc);
-                double speed;
-                if (locs.size() > 1) {
-                    Location prevLastLoc = locs.get(locs.size() - 2);
-                    speed = prevLastLoc.distanceTo(lastLoc) / 10 *72000;
-                    sumDistance += prevLastLoc.distanceTo(lastLoc);
-                } else {
-                    speed = 0;
+
+                if (lastLoc != null) {
+
+
+                    locs.add(lastLoc);
+                    double speed;
+                    if (locs.size() > 1) {
+                        Location prevLastLoc = locs.get(locs.size() - 2);
+                        speed = prevLastLoc.distanceTo(lastLoc) / 10 * 72000;
+                        sumDistance += prevLastLoc.distanceTo(lastLoc);
+                    } else {
+                        speed = 0;
+                    }
+                    AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
+                    updateSpeedRatingSoFar(ap);
                 }
-                AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
-                updateSpeedRatingSoFar(ap);
             };
         };
         timer.schedule(timerTask, 0, 10000);
