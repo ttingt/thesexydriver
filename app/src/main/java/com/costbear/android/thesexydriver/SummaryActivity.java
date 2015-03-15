@@ -23,6 +23,7 @@ public class SummaryActivity extends ActionBarActivity {
     TextView ratingMsgTextView;
     TextView fuelConsumption;
     TextView emissions;
+    TextView totaldistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class SummaryActivity extends ActionBarActivity {
         ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
         fuelConsumption = (TextView) findViewById(R.id.fuelconsumption);
         emissions = (TextView) findViewById(R.id.emissions);
+        totaldistance = (TextView) findViewById(R.id.totaldistance);
 
         String brakeR;
         String speedR;
@@ -53,9 +55,10 @@ public class SummaryActivity extends ActionBarActivity {
             speedR = "Waiting to get more data points first!";
         } else {
             speedR = String.valueOf(speedRatingSoFar/speedPtsCount);
+            overallScore = (int) Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6);
         }
 
-        overallScore = (int) Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6);
+
 
         if (brakePtsCount >= 3 && speedPtsCount >= 1) {
             overallRating = String.valueOf(overallScore);
@@ -63,7 +66,7 @@ public class SummaryActivity extends ActionBarActivity {
             overallRating = "Drive just a bit more first :3";
         }
 
-
+        rewardOutput();
 
         brakingRatingTextView.setText(brakeR);
         System.out.println(speedR);
@@ -76,6 +79,7 @@ public class SummaryActivity extends ActionBarActivity {
 
         fuelConsumption.setText("You consumed " + tripConsumption + "L of fuel");
         emissions.setText("Your CO2 emissions were: " + tripEmission + "g/km");
+        totaldistance.setText("Trip Distance: " + AccelerationManagerActivity.sumDistance + "km");
 
     }
 

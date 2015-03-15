@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="Your driving rates a..."
+        android:text="Your driving rate's a..."
         android:textAlignment="center"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"/>
@@ -96,7 +96,7 @@
         android:id="@+id/fuelconsumption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/speeding"
+        android:layout_below="@id/speedingrating"
         android:layout_marginTop="10dp"
         android:text="Your fuel consumption was: "
         android:textSize="20sp"/>
@@ -108,5 +108,15 @@
         android:layout_below="@id/fuelconsumption"
         android:text="Your emissions were: "
         android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/totaldistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total distance travelled:"
+        android:textSize="20sp"
+        android:layout_below="@+id/emissions"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
