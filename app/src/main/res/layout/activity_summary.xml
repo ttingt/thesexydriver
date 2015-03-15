@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="10/10"
-        android:textSize="70sp"
+        android:textSize="30sp"
         android:layout_marginLeft="20dp"
         android:paddingLeft="15dp"
         android:textAlignment="center"/>
@@ -92,5 +92,21 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/fuelconsumption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/speeding"
+        android:layout_marginTop="10dp"
+        android:text="Your fuel consumption was: "
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/emissions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fuelconsumption"
+        android:text="Your emissions were: "
+        android:textSize="20sp"/>
 
 </RelativeLayout>

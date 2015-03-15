@@ -3,6 +3,7 @@ package com.costbear.android.thesexydriver;
 /**
  * Created by vincentchan on 15-03-13.
  */
+
 public class Car {
 
     int year;
@@ -33,12 +34,15 @@ public class Car {
     }
 
     public double fuelConsumed() {
-        return fuelConsumption / 100 * AccelerationManagerActivity.sumDistance;
+        //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
+        return fuelConsumption / 100 * 1 * AccelerationManagerActivity.avgAccel;
     }
 
     public double co2Emitted() {
-        return emissions * AccelerationManagerActivity.sumDistance;
+        //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
+        return emissions * 1 * AccelerationManagerActivity.avgAccel;
     }
+
 
 
     // GETTERS AND SETTERS
@@ -54,8 +58,6 @@ public class Car {
         return model;
     }
 
-
-
     public double getFuelConsumption() {
         return fuelConsumption;
     }
@@ -64,11 +66,9 @@ public class Car {
         return cylinders;
     }
 
-
     public String getTransmission() {
         return transmission;
     }
-
 
     public int getEmissions() {
         return emissions;

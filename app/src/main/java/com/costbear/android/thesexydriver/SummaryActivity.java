@@ -19,6 +19,8 @@ public class SummaryActivity extends ActionBarActivity {
     TextView ratingTextView;
     TextView speedRatingTextView;
     TextView ratingMsgTextView;
+    TextView fuelConsumption;
+    TextView emissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class SummaryActivity extends ActionBarActivity {
         speedRatingTextView = (TextView) findViewById(R.id.speedingrating);
         ratingTextView = (TextView) findViewById(R.id.rating);
         ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
+        fuelConsumption = (TextView) findViewById(R.id.fuelconsumption);
+        emissions = (TextView) findViewById(R.id.emissions);
 
         String brakeR;
         String speedR;
@@ -59,6 +63,12 @@ public class SummaryActivity extends ActionBarActivity {
         System.out.println(speedR);
         speedRatingTextView.setText(speedR);
         ratingTextView.setText(overallRating);
+
+        double tripConsumption = getIntent().getDoubleExtra("fuelConsumed", 0);
+        double tripEmission = getIntent().getDoubleExtra("co2Emitted", 0);
+
+        fuelConsumption.setText("You consumed " + tripConsumption + "L of fuel");
+        emissions.setText("Your CO2 emissions were: " + tripEmission + "g/km");
 
     }
 

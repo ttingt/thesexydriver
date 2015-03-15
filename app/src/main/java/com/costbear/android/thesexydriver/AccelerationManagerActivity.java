@@ -65,6 +65,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     public static double sumDistance;
 
+    public static double avgAccel;
+
     Car car;
 
 
@@ -167,6 +169,13 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
             public void onClick(View v) {
                 stopMeasurements();
 
+                avgAccel();
+
+                double tripConsumption = car.fuelConsumed();
+                double tripEmissions = car.co2Emitted();
+
+
+
                 Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
                 i.putExtra("brakePtsCount", brakePtsCount);
                 i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
@@ -174,6 +183,9 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                 i.putExtra("speedRatingSoFar", speedRatingSoFar);
                 i.putExtra("AverageAccelerometer", sumAccel/n);
                 i.putExtra("SumDistance", sumDistance/1000); //in kM
+
+                i.putExtra("fuelConsumed", tripConsumption);
+                i.putExtra("co2Emitted", tripEmissions);
 
                 startActivity(i);
                 finish();
@@ -284,8 +296,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        finish();
    }
 
-    public double avgAccel() {
-        return sumAccel / n;
+    public void avgAccel() {
+        avgAccel =  sumAccel / n;
     }
 
 
