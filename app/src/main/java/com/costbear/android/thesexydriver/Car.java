@@ -14,6 +14,7 @@ public class Car {
     double fuelConsumption;
     int emissions;
 
+
     /**
      * Constructor
      * EFFECTS: creates a car with a year, make, model, fuel consumption and CO2 emissions
@@ -35,12 +36,12 @@ public class Car {
 
     public double fuelConsumed() {
         //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
-        return fuelConsumption / 100 * 1 * AccelerationManagerActivity.avgAccel;
+        return fuelConsumption / 100 * AccelerationManagerActivity.sumDistance * AccelerationManagerActivity.avgAccel;
     }
 
     public double co2Emitted() {
         //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
-        return emissions * 1 * AccelerationManagerActivity.avgAccel;
+        return emissions * AccelerationManagerActivity.sumDistance * AccelerationManagerActivity.avgAccel;
     }
 
 
