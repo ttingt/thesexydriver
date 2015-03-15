@@ -60,6 +60,8 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     String provider = LocationManager.GPS_PROVIDER;
     List<Location> locs;
 
+    TextView carInfo;
+
     public static double sumAccel;
     private int n;
 
@@ -69,6 +71,13 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     Car car;
 
+    int year;
+    String make;
+    String model;
+    int cylinders;
+    String transmission;
+    double fuelConsumption;
+    int emissions;
 
 
     @Override
@@ -94,16 +103,24 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         sumDistance =0;
         n = 0;
 
+        carInfo = (TextView) findViewById(R.id.carInfo);
+
 
         //INTENTS EXTRAS FROM PROFILE ACTIVITY
 
-        int year = getIntent().getIntExtra("carYear", 2000);
-        String make = getIntent().getStringExtra("carMake");
-        String model = getIntent().getStringExtra("carModel");
-        int cylinders = getIntent().getIntExtra("carCylinders", 4);
-        String transmission = getIntent().getStringExtra("carTransmission");
-        double fuelConsumption = getIntent().getDoubleExtra("carFuelConsumption", 0);
-        int emissions = getIntent().getIntExtra("carEmissions", 0);
+        year = getIntent().getIntExtra("YEAR", 2000);
+        make = getIntent().getStringExtra("MAKE");
+        model = getIntent().getStringExtra("MODEL");
+        cylinders = getIntent().getIntExtra("CYLINDERS", 4);
+        transmission = getIntent().getStringExtra("TRANSMISSION");
+        fuelConsumption = getIntent().getDoubleExtra("FUELCONSUMPTION", 0);
+        emissions = getIntent().getIntExtra("EMISSIONS", 0);
+
+        System.out.println(year + make + model + cylinders + transmission + fuelConsumption + emissions);
+
+        carInfo.setText("The car you have selected is: "
+                + year + " " + make + " " + model + " "
+                + "Cylinders: " + cylinders +". Transmission: " + transmission);
 
         car = new Car(year, make, model, cylinders, transmission, fuelConsumption, emissions);
 
