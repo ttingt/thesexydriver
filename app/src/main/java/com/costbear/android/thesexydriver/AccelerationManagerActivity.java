@@ -181,7 +181,7 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
                 i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
                 i.putExtra("speedPtsCount", speedPtsCount);
                 i.putExtra("speedRatingSoFar", speedRatingSoFar);
-                i.putExtra("AverageAccelerometer", sumAccel / n);
+                i.putExtra("AverageAccelerometer", Math.abs(sumAccel / n));
                 i.putExtra("SumDistance", sumDistance); //in m
 
                 i.putExtra("fuelConsumed", tripConsumption);
