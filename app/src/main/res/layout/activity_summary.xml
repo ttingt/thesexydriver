@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:weightSum="1"
-    android:background="#c0e6fd">
+    android:background="@drawable/summaryscreen">
 
     <TextView
         android:id="@+id/overallrating"
@@ -111,12 +111,7 @@
         android:textSize="20sp"/>
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/pin"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+
 
     <TextView
         android:id="@+id/totaldistance"
