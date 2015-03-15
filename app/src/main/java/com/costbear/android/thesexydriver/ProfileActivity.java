@@ -1,6 +1,7 @@
 package com.costbear.android.thesexydriver;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Parcelable;
@@ -11,6 +12,7 @@ import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +72,11 @@ public class ProfileActivity extends Activity {
             public void onClick(View v) {
                 year = (EditText) findViewById(R.id.yearField);
                 make = (EditText) findViewById(R.id.makeField);
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(make.getWindowToken(), 0);
+
                 //model = (EditText) findViewById(R.id.modelField);
 
                 String yearEntered = year.getText().toString();
