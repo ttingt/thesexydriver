@@ -9,13 +9,76 @@
 
 
     <TextView
+        android:text="Credits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView2"
+        android:id="@+id/credits"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/jongrinkim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jongrin Kim"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="102dp" />
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/credits"
+        android:layout_alignRight="@+id/credits"
+        android:layout_alignEnd="@+id/credits" />
+
+    <TextView
+        android:id="@+id/vincentchan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vincent Chan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/jongrinkim"
+        android:layout_alignLeft="@+id/jongrinkim"
+        android:layout_alignStart="@+id/jongrinkim" />
+
+    <TextView
+        android:id="@+id/yveschan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yves Chan"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/vincentchan"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ha Nguyen"
+        android:id="@+id/hanguyen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/yveschan"
+        android:layout_alignLeft="@+id/yveschan"
+        android:layout_alignStart="@+id/yveschan" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ting Ting Tai"
+        android:id="@+id/tingtingtang"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/hanguyen"
+        android:layout_alignRight="@+id/hanguyen"
+        android:layout_alignEnd="@+id/hanguyen" />
+
+    <Button
+        android:id="@+id/btnback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp"
+        android:layout_below="@+id/tingtingtang"
+        android:layout_alignLeft="@+id/vincentchan"
+        android:layout_alignStart="@+id/vincentchan" />
 
 </RelativeLayout>
