@@ -6,19 +6,20 @@ import java.util.Date;
  * Created by TING on 2015-03-13.
  */
 public class AccelerationPoint {
-    private double accelerationVector;
+    private double speed;
     private Date date;
-    private float lat;
-    private float lng;
+    private double lat;
+    private double lng;
 
-    public AccelerationPoint(double accelerationVector, float lat, float lng) {
-        this.accelerationVector = accelerationVector;
+    public AccelerationPoint(double speed, double lat, double lng) {
+        this.speed = speed;
         this.date = new Date();
         this.lat = lat;
         this.lng = lng;
     }
 
+    public double getSpeed() { return speed; }
     public Date getDate() { return date; }
-    public float getLat() { return lat; }
-    public float getLng() { return lng; }
+    public double getLat() { return lat; }
+    public double getLng() { return lng; }
 }

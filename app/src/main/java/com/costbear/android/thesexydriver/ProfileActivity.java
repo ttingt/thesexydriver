@@ -1,12 +1,20 @@
 package com.costbear.android.thesexydriver;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+//import android.support.v7.internal.widget.AdapterViewCompat;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+//import android.widget.AdapterView.OnItemClickListener;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -22,6 +30,11 @@ public class ProfileActivity extends ActionBarActivity {
     InputStream inputStream;
     List<Car> carList;
 
+    ListView listView;
+
+    ItemArrayAdapter itemArrayAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +46,21 @@ public class ProfileActivity extends ActionBarActivity {
 
         carList = csvFile.read();
 
+
+
         done.setOnClickListener(new View.OnClickListener() {
+
+
+
             @Override
             public void onClick(View v) {
                 year = (EditText) findViewById(R.id.yearField);
                 make = (EditText) findViewById(R.id.makeField);
-                model = (EditText) findViewById(R.id.modelField);
+                //model = (EditText) findViewById(R.id.modelField);
 
                 String yearEntered = year.getText().toString();
                 String makeEntered = make.getText().toString();
-                String modelEntered = model.getText().toString();
+                //String modelEntered = model.getText().toString();
 
                 List<Car> filteredCarList = new ArrayList<Car>();
 
@@ -52,17 +70,98 @@ public class ProfileActivity extends ActionBarActivity {
                     }
                 }
 
-                for (int i = 0; i < filteredCarList.size(); i++) {
-                    if (makeEntered.equals(filteredCarList.get(i).getMake())) {
-                        filteredCarList.remove(i);
+                List<Car> filteredByMake = new ArrayList<Car>();
+
+                for (Car c : filteredCarList) {
+                    if (makeEntered.equalsIgnoreCase(c.getMake())) {
+                        filteredByMake.add(c);
                     }
                 }
+
+                List<String> carModelsList = new ArrayList<String>();
+
+                for (Car c : filteredCarList) {
+                    String model;
+                    model = c.getModel();
+
+                    carModelsList.add(model);
+
+                }
+
+                listView = (ListView) findViewById(R.id.listview);
+                itemArrayAdapter = new ItemArrayAdapter(getApplicationContext(), R.layout.row_models);
+
+                Parcelable state = listView.onSaveInstanceState();
+                listView.setAdapter(itemArrayAdapter);
+                listView.onRestoreInstanceState(state);
+
+                for (Car c : filteredByMake) {
+                    itemArrayAdapter.add(c);
+                }
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        //String string = parent.getItemAtPosition(position);
+
+                        Car car = (Car) itemArrayAdapter.getItem(position);
+
+                        int year = (Integer) car.getYear();
+                        String make = (String) car.getMake();
+                        String model = (String) car.getModel();
+                        int cylinders = (Integer) car.getCylinders();
+                        String transmission = (String) car.getTransmission();
+                        double fuelConsumption = (Double) car.getFuelConsumption();
+                        int emissions = (Integer) car.getEmissions();
+
+                        Toast.makeText(getApplicationContext(), make, Toast.LENGTH_SHORT).show();
+
+                        System.out.println(year + make + model + cylinders + transmission + fuelConsumption + emissions);
+
+                        Intent i = new Intent(ProfileActivity.this, AccelerationManagerActivity.class);
+
+
+                        i.putExtra("YEAR", year);
+                        i.putExtra("MAKE", make);
+                        i.putExtra("MODEL", model);
+                        i.putExtra("CYLINDERS", cylinders);
+                        i.putExtra("TRANSMISSION", transmission);
+                        i.putExtra("FUELCONSUMPTION", fuelConsumption);
+                        i.putExtra("EMISSIONS", emissions);
+
+                        startActivity(i);
+                        finish();
+
+                    }
+                });
 
 
             }
 
+
         });
 
+//
+
+//
+//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3)
+//            {
+//                String data = (String) arg0.getItemAtPosition(arg2);
+//
+//                Toast.makeText(getApplicationContext(), data, Toast.LENGTH_SHORT).show();
+//
+//
+//            }
+//
+//        });
+
+    }
+
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
 
@@ -87,4 +186,5 @@ public class ProfileActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

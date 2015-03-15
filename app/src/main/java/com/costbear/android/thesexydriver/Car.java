@@ -3,11 +3,14 @@ package com.costbear.android.thesexydriver;
 /**
  * Created by vincentchan on 15-03-13.
  */
+
 public class Car {
 
     int year;
     String make;
     String model;
+    int cylinders;
+    String transmission;
     double fuelConsumption;
     int emissions;
 
@@ -20,21 +23,26 @@ public class Car {
      * @param fuelConsumption - city fuel consumption in L/100km
      * @param emissions - CO2 emissions in g/km
      */
-    public Car(int year, String make, String model, double fuelConsumption, int emissions) {
+    public Car(int year, String make, String model, int cylinders, String transmission, double fuelConsumption, int emissions) {
         this.year = year;
         this.make = make;
         this.model = model;
+        this.cylinders = cylinders;
+        this.transmission = transmission;
         this.fuelConsumption = fuelConsumption;
         this.emissions = emissions;
     }
 
     public double fuelConsumed() {
-        return fuelConsumption / 100; // * distanceTraveled * accel multiplier
+        //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
+        return fuelConsumption / 100 * 1 * AccelerationManagerActivity.avgAccel;
     }
 
     public double co2Emitted() {
-        return emissions; // * distanceTravelled * accel multiplier
+        //TODO: AccelerationManagerActivity.sumDistance needs to be reimplemented
+        return emissions * 1 * AccelerationManagerActivity.avgAccel;
     }
+
 
 
     // GETTERS AND SETTERS
@@ -42,31 +50,27 @@ public class Car {
         return year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public String getMake() {
         return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
     }
 
     public String getModel() {
         return model;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
     public double getFuelConsumption() {
         return fuelConsumption;
     }
 
-    public void setFuelConsumption(float fuelConsumption) {
-        this.fuelConsumption = fuelConsumption;
+    public int getCylinders() {
+        return cylinders;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public int getEmissions() {
+        return emissions;
     }
 }

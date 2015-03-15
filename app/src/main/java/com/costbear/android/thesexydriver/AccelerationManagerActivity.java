@@ -1,13 +1,16 @@
 package com.costbear.android.thesexydriver;
 
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Criteria;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,6 +18,11 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This file is still being implemented
@@ -25,70 +33,183 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     private Sensor accelerometer;
     private SensorManager sensorManager;
-    private TextView speedingRatingTextView;
-    private TextView brakingRatingTextView;
-    private TextView ratingTextView;
-    private TextView ratingMsgTextView;
-    private Button stop;
 
     private double accelerationX;
     private double accelerationY;
     private double accelerationZ;
-    private BrakePoint brakePoint;
+
+    private int speedPtsCount;
+    private List<AccelerationPoint> accelPts;
+    private int speedRatingSoFar;
+    private int brakePtsCount;
+    private List<BrakePoint> brakePts;
+    private int brakeRatingSoFar;
 
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
     private double mAccelLast; //last acceleration including gravity
+    private List AccelArray;
 
     private double latitude;
     private double longitude;
 
+    private Button stopButton;
 
+    Timer timer;
+    TimerTask timerTask;
+    String provider = LocationManager.GPS_PROVIDER;
+    List<Location> locs;
+
+    TextView carInfo;
+
+    public static double sumAccel;
+    private int n;
+
+    public static double sumDistance;
+
+    public static double avgAccel;
+
+    Car car;
+
+    int year;
+    String make;
+    String model;
+    int cylinders;
+    String transmission;
+    double fuelConsumption;
+    int emissions;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary_view);
+        setContentView(R.layout.driving_layout);
         sensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        speedingRatingTextView = (TextView) findViewById(R.id.speedingrating);
-        brakingRatingTextView = (TextView) findViewById(R.id.brakingrating);
-        ratingTextView = (TextView) findViewById(R.id.rating);
-        ratingMsgTextView = (TextView) findViewById(R.id.ratingmsg);
-        brakePoint = new BrakePoint(this,0,0);
+        brakePtsCount = 0;
+        speedPtsCount = 0;
+        speedRatingSoFar = 0;
+        brakeRatingSoFar = 0;
+        locs = new ArrayList<Location>();
+        accelPts = new ArrayList<AccelerationPoint>();
+        brakePts = new ArrayList<BrakePoint>();
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
-        LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
+        final LocationManager locationManager = (LocationManager) this .getSystemService(Context.LOCATION_SERVICE);
+
+        sumAccel = 0;
+        sumDistance =0;
+        n = 0;
+
+        carInfo = (TextView) findViewById(R.id.carInfo);
+
+
+        //INTENTS EXTRAS FROM PROFILE ACTIVITY
+
+        year = getIntent().getIntExtra("YEAR", 2000);
+        make = getIntent().getStringExtra("MAKE");
+        model = getIntent().getStringExtra("MODEL");
+        cylinders = getIntent().getIntExtra("CYLINDERS", 4);
+        transmission = getIntent().getStringExtra("TRANSMISSION");
+        fuelConsumption = getIntent().getDoubleExtra("FUELCONSUMPTION", 0);
+        emissions = getIntent().getIntExtra("EMISSIONS", 0);
+
+        System.out.println(year + make + model + cylinders + transmission + fuelConsumption + emissions);
+
+        carInfo.setText("The car you have selected is: "
+                + year + " " + make + " " + model + " "
+                + "Cylinders: " + cylinders +". Transmission: " + transmission);
+
+        car = new Car(year, make, model, cylinders, transmission, fuelConsumption, emissions);
+
+
+        Criteria criteria = new Criteria();
+        criteria.setPowerRequirement(Criteria.POWER_MEDIUM);
+        criteria.setSpeedRequired(true);
+        criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
+        locationManager.getBestProvider(criteria, true);
+
+        timer = new Timer();
+
+        timerTask = new TimerTask() {
+            public void run() {
+                Location lastLoc = locationManager.getLastKnownLocation(provider);
+
+                if (lastLoc != null) {
+
+
+                    locs.add(lastLoc);
+                    double speed;
+                    if (locs.size() > 1) {
+                        Location prevLastLoc = locs.get(locs.size() - 2);
+                        speed = prevLastLoc.distanceTo(lastLoc) / 10 * 72000;
+                        sumDistance += prevLastLoc.distanceTo(lastLoc);
+                    } else {
+                        speed = 0;
+                    }
+                    AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
+                    updateSpeedRatingSoFar(ap);
+                }
+            };
+        };
+        timer.schedule(timerTask, 0, 10000);
+
+
 
         // Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
+//        LocationListener locationListener = new LocationListener() {
+//
+//
+//            public void onLocationChanged(Location location) {
+//                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
+//                updateSpeedRatingSoFar(newpt);
+//            }
+//
+//            public void onStatusChanged(String provider, int status, Bundle extras) {
+//            }
+//
+//            public void onProviderEnabled(String provider) {
+//
+//            }
+//
+//            public void onProviderDisabled(String provider) {
+//
+//            }
+//
+//        };
+//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+
+        stopButton = (Button) findViewById(R.id.stopButton);
+        stopButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                stopMeasurements();
+
+                avgAccel();
+
+                double tripConsumption = car.fuelConsumed();
+                double tripEmissions = car.co2Emitted();
 
 
-            public void onLocationChanged(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
 
-                speedingRatingTextView.setText(
-                        "Current speed:" + location.getSpeed());
+                Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
+                i.putExtra("brakePtsCount", brakePtsCount);
+                i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
+                i.putExtra("speedPtsCount", speedPtsCount);
+                i.putExtra("speedRatingSoFar", speedRatingSoFar);
+                i.putExtra("AverageAccelerometer", sumAccel/n);
+                i.putExtra("SumDistance", sumDistance/1000); //in kM
+
+                i.putExtra("fuelConsumed", tripConsumption);
+                i.putExtra("co2Emitted", tripEmissions);
+
+                startActivity(i);
+                finish();
+
 
             }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            public void onProviderDisabled(String provider) {
-
-            }
-
-        };
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+        });
     }
 
     @Override
@@ -101,31 +222,53 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                     Math.pow(accelerationZ, 2));
             double delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta; //perform a low-cut filter
-            brakePoint.brakes();
-            brakingRatingTextView.setText("Brake Rating " + brakeRating() +brakePoint.getBreakCount()); //These are the X,Y,Z accelerations in m/s^2
+            BrakePoint bp = new BrakePoint(mAccel);
+            updateBrakeRatingSoFar(bp);
+            sumAccel += mAccel;
+            n++;
+//            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
     }
-
-    public double getmAccel() {
-        return mAccel;
-    }
-
-    @Override
+//
+//   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_accelerometer_test, menu);
         return true;
     }
 
-    public int brakeRating() {
-        int n = 0;
-        int ratingSoFar = 10;
-        if (brakePoint.getBreakCount() % 10 == 0) {
-            n = brakePoint.getBreakCount()/10;
-            ratingSoFar -= n;
-        }
-        return ratingSoFar;
+   public int updateBrakeRatingSoFar(BrakePoint bp) {
+        if (bp.getAccel() >-1) return brakeRatingSoFar;
+
+        brakePts.add(bp);
+        brakePtsCount++;
+
+        int addFactor = (int) -bp.getAccel()*5;
+
+        brakeRatingSoFar += addFactor;
+        return brakeRatingSoFar;
     }
 
+    public int updateSpeedRatingSoFar(AccelerationPoint ap) {
+        accelPts.add(ap);
+        speedPtsCount++;
+
+        int addFactor = 0;
+
+        if (ap.getSpeed()> 0) {
+            addFactor = 10;
+        } else if (ap.getSpeed()> 80) {
+            addFactor = 7;
+        }
+        else if (ap.getSpeed()> 70) {
+            addFactor = 4;
+        }
+        else if (ap.getSpeed()> 50) {
+            addFactor = 1;
+        }
+
+        speedRatingSoFar += addFactor;
+        return speedRatingSoFar;
+    }
 
 
     @Override
@@ -148,8 +291,31 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
     }
 
-    public int speedRating() {
-        return 0;
+   public void stopMeasurements() {
+       sensorManager.unregisterListener(this);
+       if (timer != null) {
+           timer.cancel();
+           timer = null;
+       }
+       //displaySummaryPage();
+   }
+
+   public void displaySummaryPage() {
+       Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
+       i.putExtra("brakePtsCount", brakePtsCount);
+       i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
+       i.putExtra("speedPtsCount", speedPtsCount);
+       i.putExtra("speedRatingSoFar", speedRatingSoFar);
+       i.putExtra("AverageAccelerometer", sumAccel/n);
+       i.putExtra("SumDistance", sumDistance/1000); //in kM
+
+       startActivity(i);
+       finish();
+   }
+
+    public void avgAccel() {
+        avgAccel =  sumAccel / n;
     }
+
 
 }
