@@ -56,11 +56,6 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
 
     private List<Location> locations;
 
-
-
-
-    Timer timer;
-    TimerTask timerTask;
     String provider = LocationManager.GPS_PROVIDER;
     List<Location> locs;
 
@@ -210,9 +205,9 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
             updateBrakeRatingSoFar(bp);
             sumAccel += mAccel;
             n++;
-//            brakingRatingTextView.setText("Brake Rating " + brakeRating() + brakeCount); //These are the X,Y,Z accelerations in m/s^2
+
     }
-//
+
 //   @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -278,11 +273,6 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
 
    public void stopMeasurements() {
        sensorManager.unregisterListener(this);
-       if (timer != null) {
-           timer.cancel();
-           timer = null;
-       }
-       //displaySummaryPage();
    }
 
    public void displaySummaryPage() {
