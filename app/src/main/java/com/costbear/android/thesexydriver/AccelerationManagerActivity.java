@@ -20,6 +20,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,12 +49,13 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
     private double mAccel; //acceleration apart from gravity
     private double mAccelCurrent; //acceleration including gravity
     private double mAccelLast; //last acceleration including gravity
-    private List AccelArray;
-
-    private double latitude;
-    private double longitude;
 
     private Button stopButton;
+
+    private List<Location> locations;
+
+
+
 
     Timer timer;
     TimerTask timerTask;
@@ -94,6 +96,10 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         locs = new ArrayList<Location>();
         accelPts = new ArrayList<AccelerationPoint>();
         brakePts = new ArrayList<BrakePoint>();
+
+        locations = new ArrayList<Location>();
+
+
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
@@ -161,10 +167,11 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
 
-
             public void onLocationChanged(Location location) {
-                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
-                updateSpeedRatingSoFar(newpt);
+
+            locations.add(location);
+            AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
+            updateSpeedRatingSoFar(newpt);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -191,24 +198,27 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
                 double tripConsumption = car.fuelConsumed();
                 double tripEmissions = car.co2Emitted();
 
-
+                for (int i = 1; i < locations.size(); i++) {
+                    sumDistance += locations.get(i).distanceTo(locations.get(i-1));
+                }
 
                 Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
                 i.putExtra("brakePtsCount", brakePtsCount);
                 i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
                 i.putExtra("speedPtsCount", speedPtsCount);
                 i.putExtra("speedRatingSoFar", speedRatingSoFar);
-                i.putExtra("AverageAccelerometer", sumAccel/n);
-                i.putExtra("SumDistance", sumDistance/1000); //in kM
+                i.putExtra("AverageAccelerometer", sumAccel / n);
+                i.putExtra("SumDistance", sumDistance); //in m
 
                 i.putExtra("fuelConsumed", tripConsumption);
                 i.putExtra("co2Emitted", tripEmissions);
 
                 startActivity(i);
                 finish();
-
-
             }
+
+
+
         });
     }
 
