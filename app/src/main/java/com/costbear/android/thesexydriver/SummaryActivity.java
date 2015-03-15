@@ -85,6 +85,15 @@ public class SummaryActivity extends Activity {
                 finish();
             }
         });
+        stats.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent i = new Intent(SummaryActivity.this, StatsActivity.class);
+
+                startActivity(i);
+                finish();
+            }
+        });
 
         String brakeR;
         String speedR;
