@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 public class SummaryActivity extends Activity {
 
+    static final int initialScore = 10;
+
     int brakePtsCount;
     int brakeRatingSoFar;
     int speedPtsCount;
@@ -62,7 +64,15 @@ public class SummaryActivity extends Activity {
 
 
         if (brakePtsCount >= 3 && speedPtsCount >= 1) {
-            overallRating = String.valueOf(overallScore);
+            double brakingPercentage = 1 - (double) brakeRatingSoFar/ (double) brakePtsCount * 0.05;
+            double speedingPercentage = 1 + (double)speedRatingSoFar/(double)speedPtsCount * 0.033;
+            double score = ((double) initialScore ) * brakingPercentage * speedingPercentage;
+            overallScore = (int) score;
+            System.out.println("brakes: " + brakeRatingSoFar + " " + brakePtsCount);
+            System.out.println("percentage: " + brakingPercentage + " " + speedingPercentage);
+            System.out.println("score: " + String.valueOf(initialScore) + " " + String.valueOf(brakeRatingSoFar/brakePtsCount*1/20) + " " + String.valueOf(1-speedRatingSoFar/speedPtsCount/50) );
+            if (overallScore < 0) overallScore=0;
+            overallRating = String.valueOf(overallScore) + " out of 10";
         } else {
             overallRating = "Drive just a bit more first :3";
         }
