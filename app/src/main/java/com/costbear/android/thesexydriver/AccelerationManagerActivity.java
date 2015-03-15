@@ -148,14 +148,7 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
             public void onClick(View v) {
                 stopMeasurements();
 
-                Intent i = new Intent(AccelerationManagerActivity.this, SummaryActivity.class);
-                i.putExtra("brakePtsCount", brakePtsCount);
-                i.putExtra("brakeRatingSoFar", brakeRatingSoFar);
-                i.putExtra("speedPtsCount", speedPtsCount);
-                i.putExtra("speedRatingSoFar", speedRatingSoFar);
-
-                startActivity(i);
-                finish();
+                displaySummaryPage();
             }
         });
     }
@@ -259,8 +252,4 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
        startActivity(i);
        finish();
    }
-
-    public void trackAccel() {
-
-    }
 }
