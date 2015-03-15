@@ -14,6 +14,8 @@ public class SummaryActivity extends ActionBarActivity {
     int brakeRatingSoFar;
     int speedPtsCount;
     int speedRatingSoFar;
+    int overallScore;
+    String ratingString;
 
     TextView brakingRatingTextView;
     TextView ratingTextView;
@@ -53,16 +55,21 @@ public class SummaryActivity extends ActionBarActivity {
             speedR = String.valueOf(speedRatingSoFar/speedPtsCount);
         }
 
+        overallScore = (int) Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6);
+
         if (brakePtsCount >= 3 && speedPtsCount >= 1) {
-            overallRating = String.valueOf(Math.round(brakeRatingSoFar/brakePtsCount*.4 + speedRatingSoFar/speedPtsCount*.6));
+            overallRating = String.valueOf(overallScore);
         } else {
             overallRating = "Drive just a bit more first :3";
         }
+
+
 
         brakingRatingTextView.setText(brakeR);
         System.out.println(speedR);
         speedRatingTextView.setText(speedR);
         ratingTextView.setText(overallRating);
+        ratingMsgTextView.setText(ratingString);
 
         double tripConsumption = getIntent().getDoubleExtra("fuelConsumed", 0);
         double tripEmission = getIntent().getDoubleExtra("co2Emitted", 0);
@@ -70,6 +77,34 @@ public class SummaryActivity extends ActionBarActivity {
         fuelConsumption.setText("You consumed " + tripConsumption + "L of fuel");
         emissions.setText("Your CO2 emissions were: " + tripEmission + "g/km");
 
+    }
+
+    public void rewardOutput(){
+
+        int score = overallScore;
+        switch (score) {
+            case 1: ratingString = "You are absolutely unsexy. Please think of Mother Nature";
+                break;
+            case 2: ratingString = "That was so unsexy.";
+                break;
+            case 3: ratingString = "You are absolutely unsexy. Please think of Mother Nature";
+                break;
+            case 4: ratingString = "You're starting to turn people off with you're bad driving and CO2 emissions.";
+                break;
+            case 5: ratingString = "You're about borderline sexy right now";
+                break;
+            case 6: ratingString = "Hey, it'd be a lot sexier if you took softer brakes!";
+                break;
+            case 7: ratingString = "You could do better, reduce those CO2 emissions!";
+                break;
+            case 8: ratingString = "Wow! That was some sexy driving.";
+                break;
+            case 9: ratingString = "You have a bright future in being sexy.";
+                break;
+            case 10: ratingString = "You are absolutely sexy.";
+                break;
+
+        }
     }
 
 
