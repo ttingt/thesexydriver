@@ -9,6 +9,14 @@
 
 
     <TextView
+        android:id="@+id/carInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CAR INFO GOES HERE"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

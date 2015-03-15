@@ -116,17 +116,21 @@ public class ProfileActivity extends ActionBarActivity {
 
                         Toast.makeText(getApplicationContext(), make, Toast.LENGTH_SHORT).show();
 
+                        System.out.println(year + make + model + cylinders + transmission + fuelConsumption + emissions);
+
                         Intent i = new Intent(ProfileActivity.this, AccelerationManagerActivity.class);
+
+
+                        i.putExtra("YEAR", year);
+                        i.putExtra("MAKE", make);
+                        i.putExtra("MODEL", model);
+                        i.putExtra("CYLINDERS", cylinders);
+                        i.putExtra("TRANSMISSION", transmission);
+                        i.putExtra("FUELCONSUMPTION", fuelConsumption);
+                        i.putExtra("EMISSIONS", emissions);
+
                         startActivity(i);
                         finish();
-
-                        i.putExtra("carYear", year);
-                        i.putExtra("carMake", make);
-                        i.putExtra("carModel", model);
-                        i.putExtra("carCylinders", cylinders);
-                        i.putExtra("carTransmission", transmission);
-                        i.putExtra("carFuelConsumption", fuelConsumption);
-                        i.putExtra("carEmissions", emissions);
 
                     }
                 });
@@ -154,9 +158,11 @@ public class ProfileActivity extends ActionBarActivity {
     }
 
 
-
-
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
 
     @Override
