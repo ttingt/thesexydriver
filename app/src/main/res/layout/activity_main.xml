@@ -4,25 +4,34 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#2ecc71"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/icon"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="The Sexy Driver"
         android:textAllCaps="true"
         android:textSize="30sp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_toRightOf="@id/icon"/>
 
 
      <ImageButton
         android:id="@+id/startbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/startbutton2"
-        android:layout_centerInParent="true"/>
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/startbutton3"
+        />
 
     <TextView
         android:layout_width="wrap_content"

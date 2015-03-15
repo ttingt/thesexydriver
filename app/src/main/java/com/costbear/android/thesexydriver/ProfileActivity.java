@@ -1,5 +1,6 @@
 package com.costbear.android.thesexydriver;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 //import android.widget.AdapterView.OnItemClickListener;
@@ -21,9 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProfileActivity extends ActionBarActivity {
+public class ProfileActivity extends Activity {
 
-    Button done;
+    ImageButton done;
     EditText year, make, model;
 
     CSVFile csvFile;
@@ -40,7 +42,7 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        done = (Button) findViewById(R.id.done);
+        done = (ImageButton) findViewById(R.id.done);
         inputStream = getResources().openRawResource(R.raw.cardatabase2000to2014);
         csvFile = new CSVFile(inputStream);
 
