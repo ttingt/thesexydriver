@@ -131,55 +131,55 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
         criteria.setAccuracy(Criteria.ACCURACY_MEDIUM);
         locationManager.getBestProvider(criteria, true);
 
-        timer = new Timer();
-
-        timerTask = new TimerTask() {
-            public void run() {
-                Location lastLoc = locationManager.getLastKnownLocation(provider);
-
-                if (lastLoc != null) {
-
-
-                    locs.add(lastLoc);
-                    double speed;
-                    if (locs.size() > 1) {
-                        Location prevLastLoc = locs.get(locs.size() - 2);
-                        speed = prevLastLoc.distanceTo(lastLoc) / 10 * 72000;
-                        sumDistance += prevLastLoc.distanceTo(lastLoc);
-                    } else {
-                        speed = 0;
-                    }
-                    AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
-                    updateSpeedRatingSoFar(ap);
-                }
-            };
-        };
-        timer.schedule(timerTask, 0, 10000);
+//        timer = new Timer();
+//
+//        timerTask = new TimerTask() {
+//            public void run() {
+//                Location lastLoc = locationManager.getLastKnownLocation(provider);
+//
+//                if (lastLoc != null) {
+//
+//
+//                    locs.add(lastLoc);
+//                    double speed;
+//                    if (locs.size() > 1) {
+//                        Location prevLastLoc = locs.get(locs.size() - 2);
+//                        speed = prevLastLoc.distanceTo(lastLoc) / 10 * 72000;
+//                        sumDistance += prevLastLoc.distanceTo(lastLoc);
+//                    } else {
+//                        speed = 0;
+//                    }
+//                    AccelerationPoint ap = new AccelerationPoint(speed, lastLoc.getLatitude(), lastLoc.getLongitude());
+//                    updateSpeedRatingSoFar(ap);
+//                }
+//            };
+//        };
+//        timer.schedule(timerTask, 0, 10000);
 
 
 
         // Define a listener that responds to location updates
-//        LocationListener locationListener = new LocationListener() {
-//
-//
-//            public void onLocationChanged(Location location) {
-//                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
-//                updateSpeedRatingSoFar(newpt);
-//            }
-//
-//            public void onStatusChanged(String provider, int status, Bundle extras) {
-//            }
-//
-//            public void onProviderEnabled(String provider) {
-//
-//            }
-//
-//            public void onProviderDisabled(String provider) {
-//
-//            }
-//
-//        };
-//        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+        LocationListener locationListener = new LocationListener() {
+
+
+            public void onLocationChanged(Location location) {
+                AccelerationPoint newpt = new AccelerationPoint(location.getSpeed(), location.getLatitude(), location.getLongitude());
+                updateSpeedRatingSoFar(newpt);
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            public void onProviderDisabled(String provider) {
+
+            }
+
+        };
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
 
         stopButton = (Button) findViewById(R.id.stopButton);
         stopButton.setOnClickListener(new View.OnClickListener() {
@@ -254,15 +254,16 @@ public class AccelerationManagerActivity extends ActionBarActivity implements Se
 
         int addFactor = 0;
 
-        if (ap.getSpeed()> 0) {
+        if (ap.getSpeed()> 0 && ap.getSpeed()<50) {
             addFactor = 10;
-        } else if (ap.getSpeed()> 80) {
+        }
+        if (ap.getSpeed()> 50 && ap.getSpeed()<60) {
             addFactor = 7;
         }
-        else if (ap.getSpeed()> 70) {
+        if (ap.getSpeed()> 60 && ap.getSpeed()<80) {
             addFactor = 4;
         }
-        else if (ap.getSpeed()> 50) {
+        if (ap.getSpeed()>= 80) {
             addFactor = 1;
         }
 
