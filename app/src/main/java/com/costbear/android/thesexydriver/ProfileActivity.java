@@ -2,6 +2,7 @@ package com.costbear.android.thesexydriver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 //import android.widget.AdapterView.OnItemClickListener;
 
@@ -36,6 +38,8 @@ public class ProfileActivity extends Activity {
 
     ItemArrayAdapter itemArrayAdapter;
 
+    TextView yearView, makeView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,14 @@ public class ProfileActivity extends Activity {
         csvFile = new CSVFile(inputStream);
 
         carList = csvFile.read();
+
+        yearView = (TextView) findViewById(R.id.year);
+        makeView = (TextView) findViewById(R.id.make);
+
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+        yearView.setTypeface(face);
+        makeView.setTypeface(face);
+
 
 
 

@@ -2,6 +2,7 @@ package com.costbear.android.thesexydriver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PointLabelFormatter;
@@ -23,12 +25,16 @@ public class MainActivity extends Activity {
 
 
     ImageButton startButton;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
+        title = (TextView) findViewById(R.id.title);
+        title.setTypeface(face);
         startButton = (ImageButton) findViewById(R.id.startbutton);
 
         startButton.setOnClickListener(new View.OnClickListener() {

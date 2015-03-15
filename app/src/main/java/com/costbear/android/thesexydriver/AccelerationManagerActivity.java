@@ -2,6 +2,7 @@ package com.costbear.android.thesexydriver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -59,7 +60,7 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
     String provider = LocationManager.GPS_PROVIDER;
     List<Location> locs;
 
-    TextView carInfo;
+    TextView carInfo, driveSafe;
 
     public static double sumAccel;
     private int n;
@@ -106,7 +107,11 @@ public class AccelerationManagerActivity extends Activity implements SensorEvent
         sumDistance =0;
         n = 0;
 
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/Montserrat-Regular.ttf");
         carInfo = (TextView) findViewById(R.id.carInfo);
+        driveSafe = (TextView) findViewById(R.id.driveSafe);
+        driveSafe.setTypeface(face);
+        carInfo.setTypeface(face);
 
 
         //INTENTS EXTRAS FROM PROFILE ACTIVITY

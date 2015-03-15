@@ -17,12 +17,13 @@
         android:textSize="24sp"/>
 
     <TextView
+        android:id="@+id/driveSafe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="CONTINUE DRIVING SAFELY"
         android:layout_marginTop="150dp"
-        android:id="@+id/textView"
+
 
         android:layout_centerHorizontal="true" />
 
