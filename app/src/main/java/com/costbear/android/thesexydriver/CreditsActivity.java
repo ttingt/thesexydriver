@@ -1,17 +1,36 @@
 package com.costbear.android.thesexydriver;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
 public class CreditsActivity extends ActionBarActivity {
 
+    Button backbtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        backbtn = (Button) findViewById(R.id.btnback);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credits);
+
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent i = new Intent(CreditsActivity.this, SummaryActivity.class);
+
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
 
