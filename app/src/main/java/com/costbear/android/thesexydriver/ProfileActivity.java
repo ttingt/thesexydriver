@@ -116,8 +116,6 @@ public class ProfileActivity extends Activity {
                         double fuelConsumption = (Double) car.getFuelConsumption();
                         int emissions = (Integer) car.getEmissions();
 
-                        Toast.makeText(getApplicationContext(), make, Toast.LENGTH_SHORT).show();
-
                         System.out.println(year + make + model + cylinders + transmission + fuelConsumption + emissions);
 
                         Intent i = new Intent(ProfileActivity.this, AccelerationManagerActivity.class);
