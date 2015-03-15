@@ -6,6 +6,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -26,6 +29,10 @@ public class SummaryActivity extends Activity {
     TextView emissions;
     TextView totaldistance;
 
+    Button reset;
+    Button stats;
+    Button credits;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,29 @@ public class SummaryActivity extends Activity {
         fuelConsumption = (TextView) findViewById(R.id.fuelconsumption);
         emissions = (TextView) findViewById(R.id.emissions);
         totaldistance = (TextView) findViewById(R.id.totaldistance);
+        reset = (Button) findViewById(R.id.reset);
+        stats = (Button) findViewById(R.id.stats);
+        credits = (Button) findViewById(R.id.credits);
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent i = new Intent(SummaryActivity.this, MainActivity.class);
+
+                startActivity(i);
+                finish();
+            }
+        });
+
+        credits.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent i = new Intent(SummaryActivity.this, CreditsActivity.class);
+
+                startActivity(i);
+                finish();
+            }
+        });
 
         String brakeR;
         String speedR;

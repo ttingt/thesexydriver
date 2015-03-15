@@ -16,11 +16,10 @@ public class CreditsActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        backbtn = (Button) findViewById(R.id.btnback);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credits);
 
+        backbtn = (Button) findViewById(R.id.btndo);
 
         backbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
