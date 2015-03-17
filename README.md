@@ -18,9 +18,10 @@ The actual underlying goal of the app is to reduce CO2 emissions, even if margin
 
 ==================================================================
 
-This app was developed within 36 hours during the March 2015 nwHacks. The theme of the hackathon was Sustainability.
-
-Our team, Some Sexy Dudes That Code consists of Yves Chan, Vincent Chan, Jongrin Kim, Hoi Ting Tai, and Ha Nguyen.
+This app was developed within 36 hours during the March 2015 nwHacks. <br>
+The theme of the hackathon was Sustainability.
+<br>
+Brought to you by Some Sexy Dudes That Code: Yves Chan, Vincent Chan, Jongrin Kim, Hoi Ting Tai, and Ha Nguyen.
 
 
 Last updated: 2015/03/16
