@@ -13,7 +13,7 @@ Or... are you that driver? <br>
 
 The Sexy Driver is an android app to help evaluate driving skills based on braking and acceleration rates. It uses the GPS and accelerometer within smartphones to track and record these rates in order to give helpful (and lighthearted!) feedback to encourage the user to ease up on that brake or that gas. Using data provided by Canada's Open Government Open Data, the app also gives approximate fuel consumption and CO2 emissions to give that extra prompt to curb those bad driving tendencies.
 
-The underlying goal of the app is to reduce CO2 emissions, even if marginally. 
+The underlying goal of the app is to reduce CO2 emissions and encourage safe driving, even if marginally. 
 
 ==================================================================
 
