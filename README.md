@@ -4,10 +4,10 @@ An app that measures your driving habits and determines your level of sex appeal
 
 ==============================================================
 
-Ever followed a driver that keeps braking hard? <br>
-A driver that speeds suddenly? <br>
-A driver that speeds and cuts lanes?<br>
-A nasty one that cuts in front of you and brakes just for spite?<br>
+Ever followed a driver that kept braking hard? <br>
+A driver that sped suddenly? <br>
+A driver that sped and cut lanes?<br>
+A nasty one that cut in front of you and braked just for spite?<br>
 <br>
 Or... are you that driver?
 <br>
